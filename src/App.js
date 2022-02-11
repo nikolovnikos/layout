@@ -8,7 +8,7 @@ import './App.css';
 import { LayoutZeplin, devicesDimensions } from './helpers/LayoutZeplinConverter';
 
 const layoutZMobile = new LayoutZeplin(devicesDimensions.iphone11_1111);
-const layoutZTablet = new LayoutZeplin(devicesDimensions.ipad_1111);
+// const layoutZTablet = new LayoutZeplin(devicesDimensions.ipad_1111);
 
 function App() {
 
