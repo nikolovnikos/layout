@@ -47,6 +47,7 @@ class LayoutZeplin {
     // const { left, right } = storeOrientation.getState().safeAreaInsets;
     // console.log(storeOrientation.getState().safeAreaInsets);
     const windowWidth = window.innerWidth;
+    console.log(windowWidth);
     let boxWidth = boxWidthArrayZ[0];
     let windowWidthZeplin = this.#deviceWidth;
     if (orientation === 'landscape') {
