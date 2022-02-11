@@ -10,6 +10,17 @@ import { LayoutZeplin, devicesDimensions } from './helpers/LayoutZeplinConverter
 const layoutZMobile = new LayoutZeplin(devicesDimensions.iphone11_1111);
 // const layoutZTablet = new LayoutZeplin(devicesDimensions.ipad_1111);
 
+const deviceType = () => {
+  const ua = navigator.userAgent;
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+      return "tablet";
+  }
+  else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+      return "mobile";
+  }
+  return "desktop";
+};
+
 function App() {
 
   const getCurrentOrientation = () => {
@@ -42,18 +53,19 @@ function App() {
     let podXL = { width: 0, height: 0 };
     let podM = { width: 0, height: 0 };
     let podS = { width: 0, height: 0 };
-    // // if (Device.isTablet()) {
-    //   marginTopTemplate = layoutZTablet.getHeight([15, 15], orientation);
-    //   marginBottom = layoutZTablet.getHeight([31, 31], orientation);
-    //   marginTopGameRow = layoutZTablet.getHeight([8, 8], orientation);
-    //   marginLeftGameRow = layoutZTablet.getHeight([8, 8], orientation);
-    //   fontSizeHeaderTemplate = layoutZTablet.getFontSize([18, 18], orientation);
-    //   marginBottomHeaderTemplate = layoutZTablet.getHeight([15, 15], orientation);
-    //   paddingHorizontalTemplate = layoutZTablet.getWidth([8, 6], orientation);
-    //   podXL = layoutZTablet.getBox([372, 332], [372, 332], orientation);
-    //   podM = layoutZTablet.getBox([372, 332], [182, 162], orientation);
-    //   podS = layoutZTablet.getBox([182, 162], [182, 162], orientation);
-    // } else {
+    console.log(deviceType());
+    if (deviceType() === 'tablet') {
+      marginTopTemplate = layoutZTablet.getHeight([15, 15], orientation);
+      marginBottom = layoutZTablet.getHeight([31, 31], orientation);
+      marginTopGameRow = layoutZTablet.getHeight([8, 8], orientation);
+      marginLeftGameRow = layoutZTablet.getHeight([8, 8], orientation);
+      fontSizeHeaderTemplate = layoutZTablet.getFontSize([18, 18], orientation);
+      marginBottomHeaderTemplate = layoutZTablet.getHeight([15, 15], orientation);
+      paddingHorizontalTemplate = layoutZTablet.getWidth([8, 6], orientation);
+      podXL = layoutZTablet.getBox([372, 332], [372, 332], orientation);
+      podM = layoutZTablet.getBox([372, 332], [182, 162], orientation);
+      podS = layoutZTablet.getBox([182, 162], [182, 162], orientation);
+    } else if (deviceType() === 'mobile') {
       marginTopTemplate = layoutZMobile.getHeight([15, 15], orientation);
       marginBottom = layoutZMobile.getHeight([31, 31], orientation);
       marginTopGameRow = layoutZMobile.getHeight([8, 8], orientation);
@@ -64,7 +76,7 @@ function App() {
       podXL = layoutZMobile.getBox([398, 388], [398, 388], orientation);
       podM = layoutZMobile.getBox([398, 388], [195, 190], orientation);
       podS = layoutZMobile.getBox([195, 190], [195, 190], orientation);
-    // }
+    }
 
     const dimensions = {
       marginTopTemplate,
