@@ -135,8 +135,8 @@ const LayoutScreenConverter = ({
       >
         <div style={{
           fontSize: layoutZPhone.getFontSize([12, 12], orientation),
-          marginLeft: layoutZPhone.getWidth([12, 12], orientation),
-          marginTop: layoutZPhone.getHeight([12, 12], orientation),
+          left: layoutZPhone.getWidth([12, 12], orientation),
+          top: layoutZPhone.getHeight([12, 12], orientation),
           color: '#ffffff',
           position: 'absolute',
           fontFamily: 'Gotham-Light',
@@ -199,13 +199,13 @@ const LayoutScreenConverter = ({
 
   const rectanglesColor = () => {
     return (<div style={{
-      width: layoutZPhone.getWidth([414, 800], orientation),
+      // width: layoutZPhone.getWidth([414, 800], orientation),
       marginTop: layoutZPhone.getHeight([56, 56], orientation),
       paddingTop: layoutZPhone.getHeight([8, 8], orientation),
       paddingBottom: layoutZPhone.getHeight([8, 8], orientation),
       paddingLeft: layoutZPhone.getWidth([10, 10], orientation),
       paddingRight: layoutZPhone.getWidth([10, 10], orientation),
-      position: 'relative',
+      // position: 'relative',
       // flexDirection: 'column',
       display: 'flex',
       // justifyContent: 'space-between',
