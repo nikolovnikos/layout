@@ -3,19 +3,8 @@ import {
   useEffect,
   useMemo,
 } from 'react';
-// import {
-//  View,
-//  StyleSheet,
-//  Text,
-// } from 'react-native';
 
 import PropTypes from 'prop-types';
-
-// import {
-//   storeOrientation,
-// } from '../../stores/store';
-// import { STYLES } from '../../styles/common';
-
 import { LayoutZeplin, devicesDimensions } from '../helpers/LayoutZeplinConverter';
 /*
   Zeplin layout source:
@@ -36,8 +25,6 @@ const LayoutScreenConverter = ({
         width: dimentios.width,
         height: dimentios.height,
         backgroundColor: '#49c400',
-        // justifyContent: 'center',
-        // alignItems: 'center',
       }}
       />
     );
@@ -52,8 +39,6 @@ const LayoutScreenConverter = ({
         width: dimentios.width,
         height: dimentios.height,
         backgroundColor: '#ff9c24',
-        // justifyContent: 'center',
-        // alignItems: 'center',
       }}
       />
     );
@@ -69,8 +54,6 @@ const LayoutScreenConverter = ({
         height: dimentios.height,
         backgroundColor: '#ffffff',
         display: 'table',
-        // justifyContent: 'center',
-        // alignItems: 'center',
       }}
       >
         <div style={{
@@ -96,8 +79,6 @@ const LayoutScreenConverter = ({
         width: dimentios.width,
         height: dimentios.height,
         backgroundColor: '#000',
-        // justifyContent: 'center',
-        // alignItems: 'center',
       }}
       />
     );
@@ -111,8 +92,6 @@ const LayoutScreenConverter = ({
       width: layoutZPhone.getWidth([414, 800], orientation),
       marginTop: layoutZPhone.getHeight([48, 48], orientation),
       height: dimentios.height,
-      // justifyContent: 'space-between',
-      // flexDirection: 'row',
       position: 'relative'
     }}
     >
@@ -158,8 +137,6 @@ const LayoutScreenConverter = ({
         height: '100%',
         backgroundColor: '#cccccc',
         float: 'right',
-        // justifyContent: 'center',
-        // alignItems: 'center',
       }}
       />
     );
@@ -175,16 +152,14 @@ const LayoutScreenConverter = ({
         width: dimentios.width,
         height: dimentios.height,
         marginTop,
-        marginLeft: layoutZPhone.getWidth([96, 96], orientation),
+        marginLeft: layoutZPhone.getWidth([96, 250], orientation),
         backgroundColor: '#383838',
         position: 'relative',
         display: 'table',
-        // justifyContent: 'center',
-        // alignItems: 'center',
       }}
       >
         <div style={{
-          fontSize: layoutZPhone.getFontSize([16, 80], orientation),
+          fontSize: layoutZPhone.getFontSize([16, 20], orientation),
           color: '#ffffff',
           display: 'table-cell',
           verticalAlign: 'middle',
@@ -203,11 +178,9 @@ const LayoutScreenConverter = ({
       marginTop: layoutZPhone.getHeight([56, 56], orientation),
       paddingTop: layoutZPhone.getHeight([8, 8], orientation),
       paddingBottom: layoutZPhone.getHeight([8, 8], orientation),
-      // position: 'relative',
-      // flexDirection: 'column',
       display: 'flex',
-      // justifyContent: 'space-between',
       backgroundColor: '#afafaf',
+      justifyContent: 'center',
     }}
     >
       {rectangleCian()}
@@ -225,10 +198,6 @@ const LayoutScreenConverter = ({
         width: dimentios.width,
         height: dimentios.height,
         backgroundColor: '#55ecce',
-        marginLeft: layoutZPhone.getWidth([10, 10], orientation),
-        // float: 'left',
-        // justifyContent: 'center',
-        // alignItems: 'center',
       }}
       />
     );
@@ -262,9 +231,6 @@ const LayoutScreenConverter = ({
         width: dimentios.width,
         height: dimentios.height,
         backgroundColor: '#cc55ec',
-        // float: 'left',
-        // justifyContent: 'center',
-        // alignItems: 'center',
       }}
       />
     );
