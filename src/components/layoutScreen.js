@@ -199,12 +199,10 @@ const LayoutScreenConverter = ({
 
   const rectanglesColor = () => {
     return (<div style={{
-      // width: layoutZPhone.getWidth([414, 800], orientation),
+      width: layoutZPhone.getWidth([414, 800], orientation),
       marginTop: layoutZPhone.getHeight([56, 56], orientation),
       paddingTop: layoutZPhone.getHeight([8, 8], orientation),
       paddingBottom: layoutZPhone.getHeight([8, 8], orientation),
-      paddingLeft: layoutZPhone.getWidth([10, 10], orientation),
-      paddingRight: layoutZPhone.getWidth([10, 10], orientation),
       // position: 'relative',
       // flexDirection: 'column',
       display: 'flex',
@@ -227,6 +225,7 @@ const LayoutScreenConverter = ({
         width: dimentios.width,
         height: dimentios.height,
         backgroundColor: '#55ecce',
+        marginLeft: layoutZPhone.getWidth([10, 10], orientation),
         // float: 'left',
         // justifyContent: 'center',
         // alignItems: 'center',
@@ -274,7 +273,6 @@ const LayoutScreenConverter = ({
   return (
     <div style={{
       backgroundColor: 'white',
-      flexDirection: 'column',
     }}>
       {rectangleGreen()}
       {rectangleOrange()}
