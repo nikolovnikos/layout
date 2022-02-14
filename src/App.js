@@ -8,7 +8,7 @@ import LayoutScreenConverter from './components/layoutScreen';
 
 
 const deviceType = () => {
-  console.log(navigator.userAgent)
+  // console.log(navigator.userAgent)
   const ua = navigator.userAgent;
   if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
       return "tablet";
@@ -25,21 +25,32 @@ const deviceType = () => {
 function App() {
 
   const device = useRef(deviceType());
+  const innerWidth = useRef(window.innerWidth);
 
   const getCurrentOrientation = () => {
-    // console.log('1');
     if (device.current === 'desktop') {
       return 'landscape';
     }
     return window.innerWidth < window.innerHeight ? 'portrait' : 'landscape';
   }
 
-  const [orientation, setOrienation] = useState(() => getCurrentOrientation());
+  const getResize = () => {
+    if (window.innerWidth !== innerWidth.current) {
+      const resizenew = Math.abs(innerWidth.current/window.innerWidth - 1).toFixed(2);
+      // console.log(resizenew);
+      innerWidth.current = window.innerWidth;
+      return resizenew;
+    }
+    return resize;
+  }
 
+  const [orientation, setOrienation] = useState(() => getCurrentOrientation());
+  const [resize, setResize] = useState(0);
 
 	useEffect(() => {
     function handleResize() {
       setOrienation(() => getCurrentOrientation());
+      setResize(() => getResize());
     }
     window.addEventListener('resize', handleResize)
 		return function cleanup() {
@@ -49,7 +60,7 @@ function App() {
 
   return (
     <div className="App">
-      <LayoutScreenConverter orientation={orientation}/>
+      <LayoutScreenConverter orientation={orientation} deviceType={device.current} resize={resize} />
     </div>
   );
 }
