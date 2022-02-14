@@ -7,31 +7,37 @@ import './App.css';
 import LayoutScreenConverter from './components/layoutScreen';
 
 
-const deviceType = () => {
-  // console.log(navigator.userAgent)
-  const ua = navigator.userAgent;
-  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-      return "tablet";
-  }
-  else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
-      return "mobile";
-  }
-  if (window.innerWidth <= 1080) {
-    return "tablet";
-  }
-  return "desktop";
-};
 
 function App() {
-
-  const device = useRef(deviceType());
   const innerWidth = useRef(window.innerWidth);
 
   const getCurrentOrientation = () => {
-    if (device.current === 'desktop') {
+    if (deviceType === 'desktop') {
       return 'landscape';
     }
     return window.innerWidth < window.innerHeight ? 'portrait' : 'landscape';
+  }
+
+  const getDeviceType = () => {
+    // console.log(navigator.userAgent)
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+        return "tablet";
+    }
+    else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+        return "mobile";
+    }
+    if (window.innerWidth <= 1024) {
+      return "tablet";
+    }
+    return "desktop";
+  };
+
+  const getDeviceTypeChanged = () => {
+    if (deviceType === 'tablet' && window.innerWidth > 1024) {
+      return 'desktop';
+    }
+    return deviceType;
   }
 
   const getResize = () => {
@@ -44,13 +50,15 @@ function App() {
     return resize;
   }
 
-  const [orientation, setOrienation] = useState(() => getCurrentOrientation());
+  const [deviceType, setDeviceType] = useState(() => getDeviceType());
   const [resize, setResize] = useState(0);
+  const [orientation, setOrienation] = useState(() => getCurrentOrientation());
 
 	useEffect(() => {
     function handleResize() {
-      setOrienation(() => getCurrentOrientation());
       setResize(() => getResize());
+      setDeviceType(() => getDeviceTypeChanged());
+      setOrienation(() => getCurrentOrientation());
     }
     window.addEventListener('resize', handleResize)
 		return function cleanup() {
@@ -60,7 +68,7 @@ function App() {
 
   return (
     <div className="App">
-      <LayoutScreenConverter orientation={orientation} deviceType={device.current} resize={resize} />
+      <LayoutScreenConverter orientation={orientation} deviceType={deviceType} resize={resize} />
     </div>
   );
 }
