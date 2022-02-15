@@ -2,7 +2,7 @@ import {
   useMemo,
 } from 'react';
 
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {
   convertedStyles as layoutConvertedStyles,
   defaultStyles as defaultLayoutStyles,
@@ -14,6 +14,8 @@ import {
   useResizeContext,
 } from '../conext/AppContext';
 
+import { deviceTypes } from '../general/types';
+
 const LayoutScreen = () => {
   const orientation = useOrientationContext();
   const deviceType = useDeviceTypeContext();
@@ -23,13 +25,13 @@ const LayoutScreen = () => {
     // console.log(deviceType, orientation, resize);
     let styles = Object.assign({}, defaultLayoutStyles);
     switch (deviceType) {
-      case 'mobile':
+      case deviceTypes.mobile:
         styles = layoutConvertedStyles.getMobile(orientation);
         break;
-      case 'desktop':
+      case deviceTypes.desktop:
         styles = layoutConvertedStyles.getDesktop(orientation);
         break;
-      case 'tablet':
+      case deviceTypes.tablet:
         styles = layoutConvertedStyles.getTablet(orientation);
         break;
       default:
@@ -40,7 +42,6 @@ const LayoutScreen = () => {
   }, [orientation, resize, deviceType]);
 
   const rectangleGreen = () => {
-    console.log(orientation);
     return (
       <div style={{
         width: layoutStyles.rectangleGreen.width,
@@ -67,7 +68,7 @@ const LayoutScreen = () => {
       <div style={{
         width: layoutStyles.rectangleWhite.width,
         height: layoutStyles.rectangleWhite.height,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
         display: 'table',
       }}
       >
@@ -112,7 +113,7 @@ const LayoutScreen = () => {
 
   const rectangleGray1 = () => {
     return (
-      <div style={{
+      <div className='rectangleGray1' style={{
         width: layoutStyles.rectangleGray1.width,
         fontSize: layoutStyles.rectangleGray1.fontSize,
         paddingLeft: layoutStyles.rectangleGray1.paddingLeft,
@@ -228,9 +229,7 @@ const LayoutScreen = () => {
 
   return (
     <div style={{
-      backgroundColor: 'white',
-      margin: 'auto',
-      width: layoutStyles.mainConatiner.width,
+      backgroundColor: '#fff',
     }}>
       {rectangleGreen()}
       {rectangleOrange()}
@@ -241,11 +240,6 @@ const LayoutScreen = () => {
       {rectanglesColor()}
     </div>
   );
-};
-
-
-LayoutScreen.propTypes = {
-  orientation: PropTypes.string.isRequired,
 };
 
 export default LayoutScreen;

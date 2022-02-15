@@ -1,100 +1,114 @@
 import { orientationTypes } from '../general/types';
 
-export class LayoutZeplin {
-  #deviceWidth;
+export class LayoutZeplinConverter {
+  #deviceWidthPortZ = 0;
 
-  #deviceHeight;
+  #deviceHeightPortZ = 0;
 
-  #deviceWidthLand;
+  #deviceWidthLandZ = 0;
 
-  #deviceHeightLand;
+  #deviceHeightLandZ = 0;
 
-  constructor(device = [0, 0, 0, 0]) {
+
+  /**
+   *
+   * @param {Array<number>} deviceZ Array of 4 numbers [deviceWidthPortZ, deviceHeightPortZ, deviceWidthLandZ, deviceHeightLandZ] from Zeplin project
+   *
+   */
+  constructor(deviceZ = [0, 0, 0, 0]) {
     const [
-      deviceWidth,
-      deviceHeight,
-      deviceWidthLand,
-      deviceHeightLand,
-     ] = device;
-    this.#deviceWidth = deviceWidth;
-    this.#deviceHeight = deviceHeight;
-    this.#deviceWidthLand = deviceWidthLand;
-    this.#deviceHeightLand = deviceHeightLand;
+      deviceWidthPortZ,
+      deviceHeightPortZ,
+      deviceWidthLandZ,
+      deviceHeightLandZ,
+     ] = deviceZ;
+    this.#deviceWidthPortZ = deviceWidthPortZ;
+    this.#deviceHeightPortZ = deviceHeightPortZ;
+    this.#deviceWidthLandZ = deviceWidthLandZ;
+    this.#deviceHeightLandZ = deviceHeightLandZ;
   }
 
-  getWidth = (boxWidthArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
-    // const insets = useSafeAreaInsets();
-    // const { left, right } = storeOrientation.getState().safeAreaInsets;
-    // console.log(storeOrientation.getState().safeAreaInsets);
+  /**
+   *
+   * @param {Array<number>} widthArrayZ Array of two widths for portrait and landscape from Zeplin project
+   * @param {String} orientation current device orientation
+   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element width
+   *
+   */
+  getWidth = (widthArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
     let windowWidth = window.innerWidth;
     if (locked) {
-      if (orientation === orientationTypes.landscape &&  window.innerWidth > this.#deviceWidthLand) {
-        windowWidth = this.#deviceWidthLand;
+      if (orientation === orientationTypes.landscape &&  window.innerWidth > this.#deviceWidthLandZ) {
+        windowWidth = this.#deviceWidthLandZ;
       }
-      else if (window.innerWidth > this.#deviceWidth){
-        windowWidth = this.#deviceWidth;
+      else if (window.innerWidth > this.#deviceWidthPortZ){
+        windowWidth = this.#deviceWidthPortZ;
       }
     }
-    // console.log(windowWidth);
-    let boxWidth = boxWidthArrayZ[0];
-    let windowWidthZeplin = this.#deviceWidth;
+    let newWidth = widthArrayZ[0];
+    let windowWidthZ = this.#deviceWidthPortZ;
     if (orientation === orientationTypes.landscape) {
-      windowWidthZeplin = this.#deviceWidthLand;
-      boxWidth = boxWidthArrayZ[1];
-      if (boxWidth > windowWidthZeplin) {
-        boxWidth = windowWidthZeplin;
-      }
+      windowWidthZ = this.#deviceWidthLandZ;
+      newWidth = widthArrayZ[1];
     }
-    // console.log(insets);
-    const ratio = windowWidth / windowWidthZeplin;
-    return boxWidth * ratio;
+    const ratio = windowWidth / windowWidthZ;
+    return newWidth * ratio;
   }
 
-  getHeight = (boxHeightArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
-    // const insets = useSafeAreaInsets();
-    // console.log(bottom, top);
-    // const windowHeight = window.innerHeight;
+  /**
+   *
+   * @param {Array<number>} heightArrayZ Array of two heights for portrait and landscape from Zeplin project
+   * @param {String} orientation current device orientation
+   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element height
+   *
+   */
+  getHeight = (heightArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
     let windowHeight = window.innerHeight;
     if (locked) {
-      if (orientation === orientationTypes.desktop_1440 &&  window.innerHeight > this.#deviceHeightLand) {
-        windowHeight = this.#deviceHeightLand;
+      if (orientation === orientationTypes.desktop_1440 &&  window.innerHeight > this.#deviceHeightLandZ) {
+        windowHeight = this.#deviceHeightLandZ;
       }
-      else if (window.innerHeight > this.#deviceHeight){
-        windowHeight = this.#deviceHeight;
+      else if (window.innerHeight > this.#deviceHeightPortZ){
+        windowHeight = this.#deviceHeightPortZ;
       }
     }
-    // console.log(windowHeight);
-    let boxHeight = boxHeightArrayZ[0];
-    let windowHeightZeplin = this.#deviceHeight;
+    let newHeight = heightArrayZ[0];
+    let windowHeightZ = this.#deviceHeightPortZ;
     if (orientation === orientationTypes.landscape) {
-      windowHeightZeplin = this.#deviceHeightLand;
-      boxHeight = boxHeightArrayZ[1];
-      if (boxHeight > windowHeightZeplin) {
-        boxHeight = windowHeightZeplin;
-      }
+      windowHeightZ = this.#deviceHeightLandZ;
+      newHeight = heightArrayZ[1];
     }
-    // console.log(insets);
-    const ratio = windowHeight / windowHeightZeplin;
-    return boxHeight * ratio;
+    const ratio = windowHeight / windowHeightZ;
+    return newHeight * ratio;
   }
 
-  /*
-    boxWidthArrayZ = [ widthPortrait, widthLanscape ]
-    boxHeightArrayZ = [ ]
-  */
-  getBox = (boxWidthArrayZ = [0, 0], boxHeightArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
-    let ratioZ = boxWidthArrayZ[0] / boxHeightArrayZ[0];
+  /**
+   *
+   * @param {Array<number>} widthArrayZ Array of two widths for portrait and landscape from Zeplin project
+   * @param {Array<number>} heightArrayZ Array of two heights for portrait and landscape from Zeplin project
+   * @param {String} orientation current device orientation
+   * @param {Boolean} locked When set to true the return value is locked to Zeplin element dimensions 
+   *
+   */
+  getBox = (widthArrayZ = [0, 0], heightArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
+    let ratioZ = widthArrayZ[0] / heightArrayZ[0];
     if (orientation === orientationTypes.landscape) {
-      ratioZ = boxWidthArrayZ[1] / boxHeightArrayZ[1];
+      ratioZ = widthArrayZ[1] / heightArrayZ[1];
     }
-    const w = this.getWidth(boxWidthArrayZ, orientation, locked);
+    const w = this.getWidth(widthArrayZ, orientation, locked);
     const h = w / ratioZ;
-    // console.log(ratioZ, w, h);
     return { width: w, height: h };
   }
 
+  /**
+   *
+   * @param {Array<number>} fontSizeArrayZ Array of two fontSizes for portrait and landscape from Zeplin project
+   * @param {String} orientation current device orientation
+   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element fontSize
+   *
+   */
   getFontSize = (fontSizeArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
-    const dimentios = this.getBox(fontSizeArrayZ, fontSizeArrayZ, orientation, locked);
-    return dimentios.height;
+    const dimensions = this.getBox(fontSizeArrayZ, fontSizeArrayZ, orientation, locked);
+    return dimensions.height;
   }
 }

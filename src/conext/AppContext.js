@@ -27,6 +27,7 @@ export function useResizeContext() {
 
 export function AppProvider({ children }) {
   const innerWidth = useRef(window.innerWidth);
+  const innerHeight = useRef(window.innerHeight);
 
   const getCurrentOrientation = () => {
     if (deviceType === deviceTypes.desktop) {
@@ -62,6 +63,11 @@ export function AppProvider({ children }) {
       const resizenew = Math.abs(innerWidth.current/window.innerWidth - 1).toFixed(2);
       // console.log(resizenew);
       innerWidth.current = window.innerWidth;
+      return resizenew;
+    } else if (window.innerHeight !== innerHeight.current) {
+      const resizenew = Math.abs(innerHeight.current/window.innerHeight - 1).toFixed(2);
+      // console.log(resizenew);
+      innerHeight.current = window.innerHeight;
       return resizenew;
     }
     return resize;

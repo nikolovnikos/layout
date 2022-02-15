@@ -1,21 +1,21 @@
-import { LayoutZeplin } from '../helpers/LayoutZeplinConverter';
+import { LayoutZeplinConverter } from '../helpers/LayoutZeplinConverter';
 import {devicesDimensions } from '../general/constants';
 /*
   Mobile
   https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/61b70b84075a1e48410f5f88
 */
-const layoutZPhone = new LayoutZeplin(devicesDimensions.iphone11_1111);
+const layoutZPhone = new LayoutZeplinConverter(devicesDimensions.iphone11_1111);
 /*
   Desktop
   https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a368451206fa8e5757617
 */
-const layoutZDesktop = new LayoutZeplin(devicesDimensions.desktop_1440);
+const layoutZDesktop = new LayoutZeplinConverter(devicesDimensions.desktop_1440);
 
 /*
   Tablet
   https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a3678a46278aabb5de991
 */
-const layoutZTablet = new LayoutZeplin(devicesDimensions.ipad);
+const layoutZTablet = new LayoutZeplinConverter(devicesDimensions.ipad);
 
 export const defaultStyles = {
   rectangleGreen: {
@@ -77,9 +77,6 @@ export const defaultStyles = {
     width: 0,
     height: 0,
   },
-  mainConatiner: {
-    width: '100%',
-  }
 };
 
 export const convertedStyles = {
@@ -119,7 +116,6 @@ export const convertedStyles = {
     s.rectangleBlue.marginRight = layout.getWidth([12, 16], orientation);
   
     s.rectanglePing = layout.getBox([87, 168], [104, 104], orientation);
-    s.mainConatiner.width = layout.getWidth(widthFullScreen, orientation);
     return s;
   },
   getDesktop: (orientation) => {
@@ -158,7 +154,6 @@ export const convertedStyles = {
     s.rectangleBlue.marginRight = layout.getWidth([32, 32], orientation, true);
   
     s.rectanglePing = layout.getBox([269, 269], [104, 104], orientation, true);
-    s.mainConatiner.width = layout.getWidth(widthFullScreen, orientation);
     return s;
   },
   getTablet: (orientation) => {
@@ -197,7 +192,6 @@ export const convertedStyles = {
     s.rectangleBlue.marginRight = layout.getWidth([24, 24], orientation);
   
     s.rectanglePing = layout.getBox([150, 191], [93, 93], orientation);
-    s.mainConatiner.width = layout.getWidth(widthFullScreen, orientation);
     return s;
   },
 }
