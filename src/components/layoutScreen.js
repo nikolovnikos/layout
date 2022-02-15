@@ -132,35 +132,35 @@ const getDesktopDimensions = (s = stylesZ, orientation) => {
   s.rectangleWhite.fontSize = layoutZDesktop.getFontSize([32, 32], orientation);
   s.rectangleBigBlack = layoutZDesktop.getBox(widthFullScreen, [96, 96], orientation);
 
-  s.rectanglesGray = layoutZDesktop.getBox([1280, 1280], [96, 96], orientation);
-  s.rectanglesGray.marginTop = layoutZDesktop.getHeight([110, 110], orientation);
-  s.rectanglesGray.marginLeft = layoutZDesktop.getWidth([80, 80], orientation);
+  s.rectanglesGray = layoutZDesktop.getBox([1280, 1280], [96, 96], orientation, true);
+  s.rectanglesGray.marginTop = layoutZDesktop.getHeight([110, 110], orientation, true);
+  s.rectanglesGray.marginLeft = layoutZDesktop.getWidth([80, 80], orientation, true);
 
-  s.rectangleGray1.width = layoutZDesktop.getWidth([207, 207], orientation);
-  s.rectangleGray1.fontSize = layoutZDesktop.getFontSize([14, 14], orientation);
-  s.rectangleGray1.paddingTop = layoutZDesktop.getHeight([16, 16], orientation);
-  s.rectangleGray1.paddingLeft = layoutZDesktop.getWidth([16, 16], orientation);
+  s.rectangleGray1.width = layoutZDesktop.getWidth([207, 207], orientation, true);
+  s.rectangleGray1.fontSize = layoutZDesktop.getFontSize([14, 14], orientation, true);
+  s.rectangleGray1.paddingTop = layoutZDesktop.getHeight([16, 16], orientation, true);
+  s.rectangleGray1.paddingLeft = layoutZDesktop.getWidth([16, 16], orientation, true);
 
-  s.rectangleGray2.width = layoutZDesktop.getWidth([155, 155], orientation);
+  s.rectangleGray2.width = layoutZDesktop.getWidth([155, 155], orientation, true);
 
-  s.rectangleDarkGray = layoutZDesktop.getBox([227, 227], [64, 64], orientation);
+  s.rectangleDarkGray = layoutZDesktop.getBox([227, 227], [64, 64], orientation, true);
   s.rectangleDarkGray.marginTop = layoutZDesktop.getHeight([196, 196], orientation);
-  s.rectangleDarkGray.marginLeft = layoutZDesktop.getWidth([606, 606], orientation);
-  s.rectangleDarkGray.fontSize = layoutZDesktop.getFontSize([16, 16], orientation);
+  s.rectangleDarkGray.marginLeft = layoutZDesktop.getWidth([606, 606], orientation, true);
+  s.rectangleDarkGray.fontSize = layoutZDesktop.getFontSize([16, 16], orientation, true);
 
   s.rectanglesColor.width = layoutZDesktop.getWidth(widthFullScreen, orientation);
   s.rectanglesColor.marginTop = layoutZDesktop.getHeight([118, 118], orientation);
   s.rectanglesColor.paddingTop = layoutZDesktop.getHeight([24, 24], orientation);
   s.rectanglesColor.paddingBottom = layoutZDesktop.getHeight([40, 40], orientation);
 
-  s.rectangleCian = layoutZDesktop.getBox([407, 407], [104, 104], orientation);
+  s.rectangleCian = layoutZDesktop.getBox([407, 407], [104, 104], orientation, true);
 
-  s.rectangleBlue = layoutZDesktop.getBox([540, 540], [104, 104], orientation);
-  s.rectangleBlue.marginLeft = layoutZDesktop.getWidth([32, 32], orientation);
-  s.rectangleBlue.marginRight = layoutZDesktop.getWidth([32, 32], orientation);
+  s.rectangleBlue = layoutZDesktop.getBox([540, 540], [104, 104], orientation, true);
+  s.rectangleBlue.marginLeft = layoutZDesktop.getWidth([32, 32], orientation, true);
+  s.rectangleBlue.marginRight = layoutZDesktop.getWidth([32, 32], orientation, true);
 
-  s.rectanglePing = layoutZDesktop.getBox([269, 269], [104, 104], orientation);
-  s.mainConatiner.width = layoutZDesktop.getWidth(widthFullScreen, orientation);
+  s.rectanglePing = layoutZDesktop.getBox([269, 269], [104, 104], orientation, true);
+  s.mainConatiner.width = layoutZDesktop.getWidth(widthFullScreen, orientation, false);
   return s;
 };
 const getTabletDimensions = (s = stylesZ, orientation) => {
@@ -279,6 +279,7 @@ const LayoutScreenConverter = ({
       <div style={{
         width: dimensions.rectangleBigBlack.width,
         height: dimensions.rectangleBigBlack.height,
+        marginBottom: dimensions.rectanglesGray.marginTop,
         backgroundColor: '#000',
       }}
       />
@@ -289,9 +290,8 @@ const LayoutScreenConverter = ({
     return (<div style={{
       width: dimensions.rectanglesGray.width,
       height: dimensions.rectanglesGray.height,
-      marginTop: dimensions.rectanglesGray.marginTop,
-      marginLeft: dimensions.rectanglesGray.marginLeft,
       position: 'relative',
+      margin: 'auto',
     }}
     >
       {rectangleGray1()}
@@ -343,8 +343,7 @@ const LayoutScreenConverter = ({
       <div style={{
         width: dimensions.rectangleDarkGray.width,
         height: dimensions.rectangleDarkGray.height,
-        marginTop: dimensions.rectangleDarkGray.marginTop,
-        marginLeft: dimensions.rectangleDarkGray.marginLeft,
+        margin: `${dimensions.rectangleDarkGray.marginTop}px auto 0px auto`,
         backgroundColor: '#383838',
         position: 'relative',
         display: 'table',
