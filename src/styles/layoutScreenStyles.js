@@ -1,4 +1,5 @@
-import { LayoutZeplin, devicesDimensions } from '../helpers/LayoutZeplinConverter';
+import { LayoutZeplin } from '../helpers/LayoutZeplinConverter';
+import {devicesDimensions } from '../general/constants';
 /*
   Mobile
   https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/61b70b84075a1e48410f5f88
@@ -14,9 +15,9 @@ const layoutZDesktop = new LayoutZeplin(devicesDimensions.desktop_1440);
   Tablet
   https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a3678a46278aabb5de991
 */
-const layoutZTablet = new LayoutZeplin(devicesDimensions.ipad_1111);
+const layoutZTablet = new LayoutZeplin(devicesDimensions.ipad);
 
-const defaultStyles = {
+export const defaultStyles = {
   rectangleGreen: {
     width: 0,
     height: 0,
@@ -81,7 +82,7 @@ const defaultStyles = {
   }
 };
 
-const convertedStyles = {
+export const convertedStyles = {
   getMobile: (orientation) => {
     const widthFullScreen = [414, 800];
     const layout = layoutZPhone;
@@ -201,4 +202,3 @@ const convertedStyles = {
   },
 }
 
-export { convertedStyles, defaultStyles };

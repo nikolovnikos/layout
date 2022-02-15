@@ -8,13 +8,19 @@ import {
   defaultStyles as defaultLayoutStyles,
 } from '../styles/layoutScreenStyles';
 
-const LayoutScreenConverter = ({
-  orientation = 'portrait',
-  deviceType = 'desktop',
-  resize = 0,
-}) => {
+import {
+  useDeviceTypeContext,
+  useOrientationContext,
+  useResizeContext,
+} from '../conext/AppContext';
+
+const LayoutScreen = () => {
+  const orientation = useOrientationContext();
+  const deviceType = useDeviceTypeContext();
+  const resize = useResizeContext();
+
   const layoutStyles = useMemo(() => {
-    // console.log(deviceType, orientation);
+    // console.log(deviceType, orientation, resize);
     let styles = Object.assign({}, defaultLayoutStyles);
     switch (deviceType) {
       case 'mobile':
@@ -238,8 +244,8 @@ const LayoutScreenConverter = ({
 };
 
 
-LayoutScreenConverter.propTypes = {
+LayoutScreen.propTypes = {
   orientation: PropTypes.string.isRequired,
 };
 
-export default LayoutScreenConverter;
+export default LayoutScreen;
