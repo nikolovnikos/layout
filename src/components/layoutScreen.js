@@ -1,6 +1,4 @@
 import {
-  useState,
-  useEffect,
   useMemo,
 } from 'react';
 
@@ -83,6 +81,9 @@ const stylesZ = {
     width: 0,
     height: 0,
   },
+  mainConatiner: {
+    width: '100%',
+  }
 };
 
 const getMobileDimensions = (s = stylesZ, orientation) => {
@@ -120,6 +121,7 @@ const getMobileDimensions = (s = stylesZ, orientation) => {
   s.rectangleBlue.marginRight = layoutZPhone.getWidth([12, 16], orientation);
 
   s.rectanglePing = layoutZPhone.getBox([87, 168], [104, 104], orientation);
+  s.mainConatiner.width = layoutZPhone.getWidth(widthFullScreen, orientation);
   return s;
 };
 const getDesktopDimensions = (s = stylesZ, orientation) => {
@@ -158,6 +160,7 @@ const getDesktopDimensions = (s = stylesZ, orientation) => {
   s.rectangleBlue.marginRight = layoutZDesktop.getWidth([32, 32], orientation);
 
   s.rectanglePing = layoutZDesktop.getBox([269, 269], [104, 104], orientation);
+  s.mainConatiner.width = layoutZDesktop.getWidth(widthFullScreen, orientation);
   return s;
 };
 const getTabletDimensions = (s = stylesZ, orientation) => {
@@ -196,6 +199,7 @@ const getTabletDimensions = (s = stylesZ, orientation) => {
   s.rectangleBlue.marginRight = layoutZTablet.getWidth([24, 24], orientation);
 
   s.rectanglePing = layoutZTablet.getBox([150, 191], [93, 93], orientation);
+  s.mainConatiner.width = layoutZTablet.getWidth(widthFullScreen, orientation);
   return s;
 };
 
@@ -205,8 +209,7 @@ const LayoutScreenConverter = ({
   resize = 0,
 }) => {
   const dimensions = useMemo(() => {
-    // console.log(1);
-    console.log(deviceType,orientation );
+    // console.log(deviceType, orientation);
     let dimensions = stylesZ;
     switch (deviceType) {
       case 'mobile':
@@ -416,6 +419,8 @@ const LayoutScreenConverter = ({
   return (
     <div style={{
       backgroundColor: 'white',
+      margin: 'auto',
+      width: dimensions.mainConatiner.width,
     }}>
       {rectangleGreen()}
       {rectangleOrange()}

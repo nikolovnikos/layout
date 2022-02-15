@@ -47,7 +47,10 @@ class LayoutZeplin {
     // const insets = useSafeAreaInsets();
     // const { left, right } = storeOrientation.getState().safeAreaInsets;
     // console.log(storeOrientation.getState().safeAreaInsets);
-    const windowWidth = window.innerWidth;
+    let windowWidth = window.innerWidth;
+    if (window.innerWidth > 1440) {
+      windowWidth = 1440;
+    }
     // console.log(windowWidth);
     let boxWidth = boxWidthArrayZ[0];
     let windowWidthZeplin = this.#deviceWidth;
@@ -66,7 +69,11 @@ class LayoutZeplin {
   getHeight = (boxHeightArrayZ = [0, 0], orientation = 'portrait') => {
     // const insets = useSafeAreaInsets();
     // console.log(bottom, top);
-    const windowHeight = window.innerHeight;
+    // const windowHeight = window.innerHeight;
+    let windowHeight = window.innerHeight;
+    if (window.innerHeight > 1024) {
+      windowHeight = 1024;
+    }
     // console.log(windowHeight);
     let boxHeight = boxHeightArrayZ[0];
     let windowHeightZeplin = this.#deviceHeight;

@@ -6,8 +6,6 @@ import {
 import './App.css';
 import LayoutScreenConverter from './components/layoutScreen';
 
-
-
 function App() {
   const innerWidth = useRef(window.innerWidth);
 
