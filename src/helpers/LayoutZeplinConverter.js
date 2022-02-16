@@ -9,7 +9,6 @@ export class LayoutZeplinConverter {
 
   #deviceHeightLandZ = 0;
 
-
   /**
    *
    * @param {Array<number>} deviceZ Array of 4 numbers [deviceWidthPortZ, deviceHeightPortZ, deviceWidthLandZ, deviceHeightLandZ] from Zeplin project

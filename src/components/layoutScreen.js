@@ -6,7 +6,7 @@ import {
 import {
   convertedStyles as layoutConvertedStyles,
   defaultStyles as defaultLayoutStyles,
-} from '../styles/layoutScreenStyles';
+} from './layoutScreenStyles';
 
 import {
   useDeviceTypeContext,
@@ -22,7 +22,6 @@ const LayoutScreen = () => {
   const resize = useResizeContext();
 
   const layoutStyles = useMemo(() => {
-    // console.log(deviceType, orientation, resize);
     let styles = Object.assign({}, defaultLayoutStyles);
     switch (deviceType) {
       case deviceTypes.mobile:
