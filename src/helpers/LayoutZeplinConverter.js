@@ -37,7 +37,7 @@ export class LayoutZeplinConverter {
   getWidth = (widthArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
     let windowWidth = window.innerWidth;
     if (locked) {
-      if (orientation === orientationTypes.landscape &&  window.innerWidth > this.#deviceWidthLandZ) {
+      if (orientation === orientationTypes.landscape && windowWidth > this.#deviceWidthLandZ) {
         windowWidth = this.#deviceWidthLandZ;
       }
       else if (window.innerWidth > this.#deviceWidthPortZ){
@@ -64,7 +64,7 @@ export class LayoutZeplinConverter {
   getHeight = (heightArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
     let windowHeight = window.innerHeight;
     if (locked) {
-      if (orientation === orientationTypes.desktop_1440 &&  window.innerHeight > this.#deviceHeightLandZ) {
+      if (orientation === orientationTypes.landscape && windowHeight > this.#deviceHeightLandZ) {
         windowHeight = this.#deviceHeightLandZ;
       }
       else if (window.innerHeight > this.#deviceHeightPortZ){
