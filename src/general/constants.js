@@ -1,4 +1,4 @@
-export const TABLET_WIDTH_SIZE = 1024;
+export const TABLET_MIN_WIDTH_SIZE = 1133;
 
 /*
   Array keys of the Zeplin device

@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 
 import { deviceTypes, orientationTypes } from '../general/types';
-import  { TABLET_WIDTH_SIZE } from '../general/constants';
+import  { TABLET_MIN_WIDTH_SIZE } from '../general/constants';
 
 const OrientationContext = React.createContext();
 const DeviceTypeContext = React.createContext();
@@ -38,21 +38,27 @@ export function AppProvider({ children }) {
 
   const getDeviceType = () => {
     // console.log(navigator.userAgent)
-    const ua = navigator.userAgent;
-    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-        return deviceTypes.tablet;
-    }
-    else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
-        return deviceTypes.mobile;
-    }
-    if (window.innerWidth <= TABLET_WIDTH_SIZE) {
+    const deviceByUserAgent = getDeviceByUserAgent();
+    if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth <= TABLET_MIN_WIDTH_SIZE) {
       return deviceTypes.tablet;
     }
-    return deviceTypes.desktop;
+    return deviceByUserAgent;
   };
 
+  const getDeviceByUserAgent = () => {
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+      return deviceTypes.tablet;
+    }
+    else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+      return deviceTypes.mobile;
+    }
+    return deviceTypes.desktop;
+  }
+
   const getDeviceTypeChanged = () => {
-    if (deviceType === deviceTypes.tablet && window.innerWidth > TABLET_WIDTH_SIZE) {
+    const deviceByUserAgent = getDeviceByUserAgent();
+    if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth > TABLET_MIN_WIDTH_SIZE) {
       return deviceTypes.desktop;
     }
     return deviceType;
@@ -63,11 +69,6 @@ export function AppProvider({ children }) {
       const resizenew = Math.abs(innerWidth.current/window.innerWidth - 1).toFixed(2);
       // console.log(resizenew);
       innerWidth.current = window.innerWidth;
-      return resizenew;
-    } else if (window.innerHeight !== innerHeight.current) {
-      const resizenew = Math.abs(innerHeight.current/window.innerHeight - 1).toFixed(2);
-      // console.log(resizenew);
-      innerHeight.current = window.innerHeight;
       return resizenew;
     }
     return resize;
