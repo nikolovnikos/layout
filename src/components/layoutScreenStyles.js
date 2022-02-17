@@ -85,6 +85,7 @@ const mobileStyles = (s = defaultStyles, orientation) => {
   const widthFullScreenP = 414;
   const widthFullScreenL = 800;
   const isP = orientation === orientationTypes.portrait;
+  // console.log(isP);
 
   s.rectangleGreen = isP ? layout.getBoxP(widthFullScreenP, 48) : layout.getBoxL(widthFullScreenL, 48);
   s.rectangleOrange = isP ? layout.getBoxP(widthFullScreenP, 48) : layout.getBoxL(widthFullScreenL, 48);
@@ -118,6 +119,7 @@ const mobileStyles = (s = defaultStyles, orientation) => {
   s.rectangleBlue.marginRight = isP ? layout.getWidthP(8) : layout.getWidthL(16);
 
   s.rectanglePing = isP ? layout.getBoxP(87, 104) : layout.getBoxL(168, 104);
+  console.log(s);
   return s;
 }
 

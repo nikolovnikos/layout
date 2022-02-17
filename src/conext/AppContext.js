@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 
 import { deviceTypes, orientationTypes } from '../general/types';
-import  { TABLET_MIN_WIDTH_SIZE } from '../general/constants';
+import  { TABLET_MAX_WIDTH_SIZE } from '../general/constants';
 
 const OrientationContext = React.createContext();
 const DeviceTypeContext = React.createContext();
@@ -27,19 +27,11 @@ export function useResizeContext() {
 
 export function AppProvider({ children }) {
   const innerWidth = useRef(window.innerWidth);
-  const innerHeight = useRef(window.innerHeight);
-
-  const getCurrentOrientation = () => {
-    if (deviceType === deviceTypes.desktop) {
-      return orientationTypes.landscape;
-    }
-    return window.innerWidth < window.innerHeight ? orientationTypes.portrait : orientationTypes.landscape;
-  }
 
   const getDeviceType = () => {
     // console.log(navigator.userAgent)
     const deviceByUserAgent = getDeviceByUserAgent();
-    if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth <= TABLET_MIN_WIDTH_SIZE) {
+    if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth <= TABLET_MAX_WIDTH_SIZE) {
       return deviceTypes.tablet;
     }
     return deviceByUserAgent;
@@ -56,37 +48,69 @@ export function AppProvider({ children }) {
     return deviceTypes.desktop;
   }
 
-  const getDeviceTypeChanged = () => {
-    const deviceByUserAgent = getDeviceByUserAgent();
-    if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth > TABLET_MIN_WIDTH_SIZE) {
-      return deviceTypes.desktop;
-    }
-    return deviceType;
-  }
-
-  const getResize = () => {
-    if (window.innerWidth !== innerWidth.current) {
-      const resizenew = Math.abs(innerWidth.current/window.innerWidth - 1).toFixed(2);
-      // console.log(resizenew);
-      innerWidth.current = window.innerWidth;
-      return resizenew;
-    }
-    return resize;
-  }
 
   const [deviceType, setDeviceType] = useState(() => getDeviceType());
   const [resize, setResize] = useState(0);
   const [orientation, setOrienation] = useState(() => getCurrentOrientation());
 
-  useEffect(() => {
-    function handleResize() {
-      setResize(() => getResize());
-      setDeviceType(() => getDeviceTypeChanged());
-      setOrienation(() => getCurrentOrientation());
+  function getCurrentOrientation() {
+    const orientationType = (window.screen.orientation || {}).type
+    if (orientationType) {
+      // no Safari
+      if (orientationType.indexOf(orientationTypes.landscape) !== -1) {
+        return orientationTypes.landscape
+      } else {
+        return orientationTypes.portrait;
+      }
     }
-    window.addEventListener('resize', handleResize)
+
+    // on Safari
+    if (typeof window.orientation === 'undefined') {
+      // Detect desktop 
+      return orientationTypes.landscape;
+    }
+    if (window.orientation === 90 || window.orientation === -90) { //Landscape Mode
+      return orientationTypes.landscape;
+    }
+    console.log(window.orientation);
+    return orientationTypes.portrait;
+  }
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth !== innerWidth.current) {
+        const resizenew = Math.abs(innerWidth.current / window.innerWidth - 1).toFixed(3);
+        // console.log(resizenew);
+        innerWidth.current = window.innerWidth;
+        setResize(resizenew);
+      }
+      const deviceByUserAgent = getDeviceByUserAgent();
+      if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth > TABLET_MAX_WIDTH_SIZE) {
+        setDeviceType(deviceTypes.desktop);
+      }
+      if (!window.onorientationchange) {
+        // Desktop Devices
+        setOrienation(getCurrentOrientation());
+      }
+    }
+    const handleOrienationChangeEvent = (event) => {
+      const { type } = event.target.screen.orientation;
+      if (type.indexOf(orientationTypes.landscape) !== -1) {
+        setOrienation(orientationTypes.landscape);
+      } else {
+        setOrienation(orientationTypes.portrait);
+      }
+    };
+    window.addEventListener('resize', handleResize, true);
+    if (window.onorientationchange) {
+      // Only on mobile devices
+      window.addEventListener("orientationchange", handleOrienationChangeEvent);
+    }
 		return function cleanup() {
-			window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', handleResize);
+      if (window.onorientationchange) {
+        window.removeEventListener("orientationchange", handleOrienationChangeEvent);
+      }
 		};
   }, []);
 
