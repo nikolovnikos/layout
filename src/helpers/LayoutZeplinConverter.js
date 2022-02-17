@@ -1,113 +1,101 @@
-import { orientationTypes } from '../general/types';
-
 export class LayoutZeplinConverter {
   #deviceWidthPortZ = 0;
 
-  #deviceHeightPortZ = 0;
-
   #deviceWidthLandZ = 0;
 
-  #deviceHeightLandZ = 0;
-
-  /**
-   *
-   * @param {Array<number>} deviceZ Array of 4 numbers [deviceWidthPortZ, deviceHeightPortZ, deviceWidthLandZ, deviceHeightLandZ] from Zeplin project
-   *
-   */
-  constructor(deviceZ = [0, 0, 0, 0]) {
-    const [
-      deviceWidthPortZ,
-      deviceHeightPortZ,
-      deviceWidthLandZ,
-      deviceHeightLandZ,
-     ] = deviceZ;
-    this.#deviceWidthPortZ = deviceWidthPortZ;
-    this.#deviceHeightPortZ = deviceHeightPortZ;
-    this.#deviceWidthLandZ = deviceWidthLandZ;
-    this.#deviceHeightLandZ = deviceHeightLandZ;
-  }
-
-  /**
-   *
-   * @param {Array<number>} widthArrayZ Array of two widths for portrait and landscape from Zeplin project
-   * @param {String} orientation current device orientation
-   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element width
-   *
-   */
-  getWidth = (widthArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
+  #getWidth = (widthZ = 0, deviceWidthZ = 0, locked = false) => {
     let windowWidth = window.innerWidth;
-    if (locked) {
-      if (orientation === orientationTypes.landscape && windowWidth > this.#deviceWidthLandZ) {
-        windowWidth = this.#deviceWidthLandZ;
-      }
-      else if (window.innerWidth > this.#deviceWidthPortZ){
-        windowWidth = this.#deviceWidthPortZ;
-      }
+    if (locked && windowWidth > deviceWidthZ) {
+      windowWidth = deviceWidthZ;
     }
-    let newWidth = widthArrayZ[0];
-    let windowWidthZ = this.#deviceWidthPortZ;
-    if (orientation === orientationTypes.landscape) {
-      windowWidthZ = this.#deviceWidthLandZ;
-      newWidth = widthArrayZ[1];
-    }
+    let newWidth = widthZ;
+    let windowWidthZ = deviceWidthZ;
     const ratio = windowWidth / windowWidthZ;
     return newWidth * ratio;
   }
 
-  /**
-   *
-   * @param {Array<number>} heightArrayZ Array of two heights for portrait and landscape from Zeplin project
-   * @param {String} orientation current device orientation
-   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element height
-   *
-   */
-  getHeight = (heightArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
-    let windowHeight = window.innerHeight;
-    if (locked) {
-      if (orientation === orientationTypes.landscape && windowHeight > this.#deviceHeightLandZ) {
-        windowHeight = this.#deviceHeightLandZ;
-      }
-      else if (window.innerHeight > this.#deviceHeightPortZ){
-        windowHeight = this.#deviceHeightPortZ;
-      }
-    }
-    let newHeight = heightArrayZ[0];
-    let windowHeightZ = this.#deviceHeightPortZ;
-    if (orientation === orientationTypes.landscape) {
-      windowHeightZ = this.#deviceHeightLandZ;
-      newHeight = heightArrayZ[1];
-    }
-    const ratio = windowHeight / windowHeightZ;
-    return newHeight * ratio;
-  }
-
-  /**
-   *
-   * @param {Array<number>} widthArrayZ Array of two widths for portrait and landscape from Zeplin project
-   * @param {Array<number>} heightArrayZ Array of two heights for portrait and landscape from Zeplin project
-   * @param {String} orientation current device orientation
-   * @param {Boolean} locked When set to true the return value is locked to Zeplin element dimensions 
-   *
-   */
-  getBox = (widthArrayZ = [0, 0], heightArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
-    let ratioZ = widthArrayZ[0] / heightArrayZ[0];
-    if (orientation === orientationTypes.landscape) {
-      ratioZ = widthArrayZ[1] / heightArrayZ[1];
-    }
-    const w = this.getWidth(widthArrayZ, orientation, locked);
+  #getBox = (widthZ = 0, heightZ = 0, deviceWidthZ = 0, locked = false) => {
+    let ratioZ = widthZ / heightZ;
+    const w = this.#getWidth(widthZ, deviceWidthZ, locked);
     const h = w / ratioZ;
     return { width: w, height: h };
   }
 
   /**
    *
-   * @param {Array<number>} fontSizeArrayZ Array of two fontSizes for portrait and landscape from Zeplin project
-   * @param {String} orientation current device orientation
-   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element fontSize
+   * @param {Array<number>} deviceZ Array of 2 numbers [deviceWidthPortZ, deviceWidthLandZ] from Zeplin project
    *
    */
-  getFontSize = (fontSizeArrayZ = [0, 0], orientation = orientationTypes.portrait, locked = false) => {
-    const dimensions = this.getBox(fontSizeArrayZ, fontSizeArrayZ, orientation, locked);
+  constructor(deviceZ = [0, 0]) {
+    const [
+      deviceWidthPortZ,
+      deviceWidthLandZ,
+     ] = deviceZ;
+    this.#deviceWidthPortZ = deviceWidthPortZ;
+    this.#deviceWidthLandZ = deviceWidthLandZ;
+  }
+
+  /**
+   *
+   * @param {number} widthZ width of element from Zeplin project
+   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element value
+   *
+   */
+  getWidthL = (widthZ = 0, locked = false) => {
+    return this.#getWidth(widthZ, this.#deviceWidthLandZ, locked);
+  }
+
+  /**
+   *
+   * @param {number} widthZ width of element from Zeplin project
+   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element value
+   *
+   */
+  getWidthP = (widthZ = 0, locked = false) => {
+    return this.#getWidth(widthZ, this.#deviceWidthPortZ, locked);
+  }
+
+    /**
+   *
+   * @param {number} heightZ height of element from Zeplin project
+   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element value
+   *
+   */
+  getHeightL = (heightZ = 0, locked = false) => {
+    const dimensions = this.#getBox(heightZ, heightZ, this.#deviceWidthLandZ, locked);
     return dimensions.height;
+  }
+
+  /**
+   *
+   * @param {number} heightZ height of element from Zeplin project
+   * @param {Boolean} locked When set to true the return value can't be bigger than Zeplin element value
+   *
+   */
+  getHeightP = (heightZ = 0, locked = false) => {
+    const dimensions = this.#getBox(heightZ, heightZ, this.#deviceWidthPortZ, locked);
+    return dimensions.height;
+  }
+ 
+  /**
+   *
+   * @param {number} widthZ width of element from Zeplin project
+   * @param {number} heightZ height of element from Zeplin project
+   * @param {Boolean} locked When set to true the return value can't be bigger that Zeplin element values 
+   *
+   */
+  getBoxL = (widthZ = 0, heightZ = 0, locked = false) => {
+    return this.#getBox(widthZ, heightZ, this.#deviceWidthLandZ, locked);
+  }
+
+  /**
+   *
+   * @param {number} widthZ width of element from Zeplin project
+   * @param {number} heightZ height of element from Zeplin project
+   * @param {Boolean} locked When set to true the return value can't be bigger that Zeplin element values 
+   *
+   */
+  getBoxP = (widthZ = 0, heightZ = 0, locked = false) => {
+    return this.#getBox(widthZ, heightZ, this.#deviceWidthPortZ, locked);
   }
 }

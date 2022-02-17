@@ -80,7 +80,7 @@ const LayoutScreen = () => {
           fontFamily: 'Gotham-Bold',
         }}
         >
-          Type something
+          Type something here AW
         </div>
       </div>
     );
