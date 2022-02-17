@@ -26,12 +26,12 @@ export function useResizeContext() {
 }
 
 export function AppProvider({ children }) {
-  const outerWidth = useRef(window.outerWidth);
+  const innerWidth = useRef(window.innerWidth);
 
   const getDeviceType = () => {
     // console.log(navigator.userAgent)
     const deviceByUserAgent = getDeviceByUserAgent();
-    if (deviceByUserAgent === deviceTypes.desktop && window.outerWidth <= TABLET_MAX_WIDTH_SIZE) {
+    if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth <= TABLET_MAX_WIDTH_SIZE) {
       return deviceTypes.tablet;
     }
     return deviceByUserAgent;
@@ -80,14 +80,15 @@ export function AppProvider({ children }) {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.outerWidth !== outerWidth.current) {
-        const resizenew = Math.abs(outerWidth.current / window.outerWidth - 1).toFixed(3);
+      console.log(window.innerWidth, window.innerWidth);
+      if (window.innerWidth !== innerWidth.current) {
+        const resizenew = Math.abs(innerWidth.current / window.innerWidth - 1).toFixed(3);
         // console.log(resizenew);
-        outerWidth.current = window.outerWidth;
+        innerWidth.current = window.innerWidth;
         setResize(resizenew);
       }
       const deviceByUserAgent = getDeviceByUserAgent();
-      if (deviceByUserAgent === deviceTypes.desktop && window.outerWidth > TABLET_MAX_WIDTH_SIZE) {
+      if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth > TABLET_MAX_WIDTH_SIZE) {
         setDeviceType(deviceTypes.desktop);
       }
       if (!window.onorientationchange) {
@@ -103,11 +104,11 @@ export function AppProvider({ children }) {
         setOrienation(orientationTypes.portrait);
       }
     };
-    window.addEventListener('resize', handleResize, true);
     if (window.onorientationchange) {
       // Only on mobile devices
-      window.addEventListener("orientationchange", handleOrienationChangeEvent);
+      window.addEventListener("orientationchange", handleOrienationChangeEvent, true);
     }
+    window.addEventListener('resize', handleResize, true);
 		return function cleanup() {
       window.removeEventListener('resize', handleResize);
       if (window.onorientationchange) {
