@@ -47,7 +47,7 @@ export function AppProvider({ children }) {
   }
 
   const [deviceType, setDeviceType] = useState(() => getDeviceType());
-  const [innerWidth, setInnerWidth] = useState(document.body.clientWidth);
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [orientation, setOrienation] = useState(() => getCurrentOrientation());
 
   function getCurrentOrientation() {
