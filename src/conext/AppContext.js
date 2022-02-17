@@ -11,7 +11,7 @@ import  { TABLET_MAX_WIDTH_SIZE } from '../general/constants';
 
 const OrientationContext = React.createContext();
 const DeviceTypeContext = React.createContext();
-const ResizeContext = React.createContext();
+const InnerWidthContext = React.createContext();
 
 export function useOrientationContext() {
   return useContext(OrientationContext);
@@ -21,13 +21,11 @@ export function useDeviceTypeContext() {
   return useContext(DeviceTypeContext);
 }
 
-export function useResizeContext() {
-  return useContext(ResizeContext);
+export function useInnerWidthContext() {
+  return useContext(InnerWidthContext);
 }
 
 export function AppProvider({ children }) {
-  const innerWidth = useRef(window.innerWidth);
-
   const getDeviceType = () => {
     // console.log(navigator.userAgent)
     const deviceByUserAgent = getDeviceByUserAgent();
@@ -48,9 +46,8 @@ export function AppProvider({ children }) {
     return deviceTypes.desktop;
   }
 
-
   const [deviceType, setDeviceType] = useState(() => getDeviceType());
-  const [resize, setResize] = useState(0);
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [orientation, setOrienation] = useState(() => getCurrentOrientation());
 
   function getCurrentOrientation() {
@@ -80,13 +77,8 @@ export function AppProvider({ children }) {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log(window.innerWidth, window.innerWidth);
-      if (window.innerWidth !== innerWidth.current) {
-        const resizenew = Math.abs(innerWidth.current / window.innerWidth - 1).toFixed(3);
-        // console.log(resizenew);
-        innerWidth.current = window.innerWidth;
-        setResize(resizenew);
-      }
+      console.log(window.outerHeight, window.innerWidth);
+      setInnerWidth(window.innerWidth);
       const deviceByUserAgent = getDeviceByUserAgent();
       if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth > TABLET_MAX_WIDTH_SIZE) {
         setDeviceType(deviceTypes.desktop);
@@ -108,7 +100,7 @@ export function AppProvider({ children }) {
       // Only on mobile devices
       window.addEventListener("orientationchange", handleOrienationChangeEvent, true);
     }
-    window.addEventListener('resize', handleResize, true);
+    window.addEventListener('resize', handleResize, false);
 		return function cleanup() {
       window.removeEventListener('resize', handleResize);
       if (window.onorientationchange) {
@@ -121,9 +113,9 @@ export function AppProvider({ children }) {
     <>
       <DeviceTypeContext.Provider value={deviceType}>
         <OrientationContext.Provider value={orientation}>
-          <ResizeContext.Provider value={resize}>
+          <InnerWidthContext.Provider value={innerWidth}>
             {children}
-          </ResizeContext.Provider>
+          </InnerWidthContext.Provider>
         </OrientationContext.Provider>
       </DeviceTypeContext.Provider>
     </>

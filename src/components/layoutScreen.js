@@ -1,45 +1,89 @@
 import {
-  useMemo,
+  useMemo, useRef, useEffect,
 } from 'react';
 
 // import PropTypes from 'prop-types';
 import {
-  convertedStyles as layoutConvertedStyles,
+  ZeplinStylesLayoutScreen,
   defaultStyles as defaultLayoutStyles,
 } from './layoutScreenStyles';
 
 import {
   useDeviceTypeContext,
   useOrientationContext,
-  useResizeContext,
+  useInnerWidthContext,
 } from '../conext/AppContext';
 
 import { deviceTypes } from '../general/types';
+import {devicesDimensions } from '../general/constants';
+import { LayoutZeplinConverter } from '../helpers/LayoutZeplinConverter';
+/*
+  Mobile
+  https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/61b70b84075a1e48410f5f88
+*/
+const layoutZPhone = new LayoutZeplinConverter(devicesDimensions.iphone11_1111);
+/*
+  Desktop
+  https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a368451206fa8e5757617
+*/
+const layoutZDesktop = new LayoutZeplinConverter(devicesDimensions.desktop_1440);
+
+/*
+  Tablet
+  https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a3678a46278aabb5de991
+*/
+const layoutZTablet = new LayoutZeplinConverter(devicesDimensions.ipad);
 
 const LayoutScreen = () => {
   const orientation = useOrientationContext();
   const deviceType = useDeviceTypeContext();
-  const resize = useResizeContext();
+  const innerWidth = useInnerWidthContext();
 
   const layoutStyles = useMemo(() => {
     let styles = Object.assign({}, defaultLayoutStyles);
+
+    const getMobile = () => {
+      let s = Object.assign({}, defaultLayoutStyles);
+      layoutZPhone.innerWidth = innerWidth;
+      const mobile = new ZeplinStylesLayoutScreen(layoutZPhone, orientation);
+      s = mobile.getMobile();
+      return s;
+    };
+
+    const getDesktop = () => {
+      let s = Object.assign({}, defaultLayoutStyles);
+      layoutZDesktop.innerWidth = innerWidth;
+      const desktop = new ZeplinStylesLayoutScreen(layoutZDesktop, orientation);
+      s = desktop.getDesktop();
+      return s;
+    };
+
+    const getTablet = () => {
+      let s = Object.assign({}, defaultLayoutStyles);
+      layoutZTablet.innerWidth = innerWidth;
+      const tablet = new ZeplinStylesLayoutScreen(layoutZTablet, orientation);
+      s = tablet.getTablet();
+      return s;
+    };
+
     switch (deviceType) {
       case deviceTypes.mobile:
-        styles = layoutConvertedStyles.getMobile(orientation);
+        styles = getMobile();
         break;
       case deviceTypes.desktop:
-        styles = layoutConvertedStyles.getDesktop(orientation);
+        styles = getDesktop();
+        console.log(1);
         break;
       case deviceTypes.tablet:
-        styles = layoutConvertedStyles.getTablet(orientation);
+        styles = getTablet();
         break;
       default:
-        styles = layoutConvertedStyles.getDesktop(orientation);
+        styles = getDesktop();
         break;
     }
-    console.log(orientation, deviceType, resize, styles);
+    // console.log(orientation, deviceType, innerWidth, styles);
     return styles;
-  }, [orientation, resize, deviceType]);
+  }, [innerWidth, orientation, deviceType]);
 
   const rectangleGreen = () => {
     return (

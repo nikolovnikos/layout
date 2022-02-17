@@ -1,25 +1,32 @@
+
+Number.prototype.toFixedNumber = function(digits, base){
+  var pow = Math.pow(base||10, digits);
+  return Math.round(this*pow) / pow;
+}
+
 export class LayoutZeplinConverter {
   #deviceWidthPortZ = 0;
 
   #deviceWidthLandZ = 0;
 
+  innerWidth = window.innerWidth;
+
   #getWidth = (widthZ = 0, deviceWidthZ = 0, locked = false) => {
-    console.log(window.innerWidth, window.outerWidth, deviceWidthZ);
-    let windowWidth = window.innerWidth > window.outerWidth ? window.innerWidth : window.outerWidth;
-    console.log(windowWidth);
+    let windowWidth = this.innerWidth;
+    // console.log(windowWidth);
     if (locked && windowWidth > deviceWidthZ) {
       windowWidth = deviceWidthZ;
     }
     let newWidth = widthZ;
     let windowWidthZ = deviceWidthZ;
     const ratio = windowWidth / windowWidthZ;
-    return newWidth * ratio;
+    return (newWidth * ratio).toFixedNumber(2);
   }
 
   #getBox = (widthZ = 0, heightZ = 0, deviceWidthZ = 0, locked = false) => {
     let ratioZ = widthZ / heightZ;
     const w = this.#getWidth(widthZ, deviceWidthZ, locked);
-    const h = w / ratioZ;
+    const h = (w / ratioZ).toFixedNumber(2);
     return { width: w, height: h };
   }
 
