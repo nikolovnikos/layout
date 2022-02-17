@@ -96,11 +96,11 @@ export function AppProvider({ children }) {
         setOrienation(orientationTypes.portrait);
       }
     };
+    window.addEventListener('resize', handleResize, false);
     if (window.onorientationchange) {
       // Only on mobile devices
       window.addEventListener("orientationchange", handleOrienationChangeEvent, true);
     }
-    window.addEventListener('resize', handleResize, false);
 		return function cleanup() {
       window.removeEventListener('resize', handleResize);
       if (window.onorientationchange) {

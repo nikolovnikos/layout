@@ -64,7 +64,13 @@ export const defaultStyles = {
 };
 
 class ZeplinStyle {
-  constructor(layoutZ = new LayoutZeplinConverter(), orientation = orientationTypes.portrait) {
+  /**
+   *  ZeplinStyle
+   * @param {LayoutZeplinConverter} layoutZ instance of LayoutZeplinConverter class
+   * @param {string} orientation portrait or landscape
+   *
+   */
+  constructor(layoutZ, orientation) {
     this.layoutZ = layoutZ;
     this.orientation = orientation;
   }
@@ -73,8 +79,16 @@ class ZeplinStyle {
   getDesktop = () => {}
 }
 
+
+
 export class ZeplinStylesLayoutScreen extends ZeplinStyle {
-  constructor(layoutZ = new LayoutZeplinConverter(), orientation = orientationTypes.portrait) {
+  /**
+   *  ZeplinStyle
+   * @param {LayoutZeplinConverter} layoutZ instance of LayoutZeplinConverter class
+   * @param {string} orientation portrait or landscape
+   *
+   */
+  constructor(layoutZ, orientation) {
     super(layoutZ, orientation);
   }
 
