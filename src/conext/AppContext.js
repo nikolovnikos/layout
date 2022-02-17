@@ -26,12 +26,12 @@ export function useResizeContext() {
 }
 
 export function AppProvider({ children }) {
-  const innerWidth = useRef(window.innerWidth);
+  const outerWidth = useRef(window.outerWidth);
 
   const getDeviceType = () => {
     // console.log(navigator.userAgent)
     const deviceByUserAgent = getDeviceByUserAgent();
-    if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth <= TABLET_MAX_WIDTH_SIZE) {
+    if (deviceByUserAgent === deviceTypes.desktop && window.outerWidth <= TABLET_MAX_WIDTH_SIZE) {
       return deviceTypes.tablet;
     }
     return deviceByUserAgent;
@@ -64,28 +64,30 @@ export function AppProvider({ children }) {
       }
     }
 
-    // on Safari
+    // on Safari web and iOS
     if (typeof window.orientation === 'undefined') {
       // Detect desktop 
       return orientationTypes.landscape;
     }
-    if (window.orientation === 90 || window.orientation === -90) { //Landscape Mode
+    // Detect mobile iOS device
+    if (window.orientation === 90 || window.orientation === -90) {
+      // Landscape Mode
       return orientationTypes.landscape;
     }
-    console.log(window.orientation);
+    // console.log(window.orientation);
     return orientationTypes.portrait;
   }
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth !== innerWidth.current) {
-        const resizenew = Math.abs(innerWidth.current / window.innerWidth - 1).toFixed(3);
+      if (window.outerWidth !== outerWidth.current) {
+        const resizenew = Math.abs(outerWidth.current / window.outerWidth - 1).toFixed(3);
         // console.log(resizenew);
-        innerWidth.current = window.innerWidth;
+        outerWidth.current = window.outerWidth;
         setResize(resizenew);
       }
       const deviceByUserAgent = getDeviceByUserAgent();
-      if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth > TABLET_MAX_WIDTH_SIZE) {
+      if (deviceByUserAgent === deviceTypes.desktop && window.outerWidth > TABLET_MAX_WIDTH_SIZE) {
         setDeviceType(deviceTypes.desktop);
       }
       if (!window.onorientationchange) {

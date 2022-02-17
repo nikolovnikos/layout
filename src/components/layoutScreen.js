@@ -23,7 +23,6 @@ const LayoutScreen = () => {
 
   const layoutStyles = useMemo(() => {
     let styles = Object.assign({}, defaultLayoutStyles);
-    console.log(orientation, deviceType)
     switch (deviceType) {
       case deviceTypes.mobile:
         styles = layoutConvertedStyles.getMobile(orientation);
@@ -38,6 +37,7 @@ const LayoutScreen = () => {
         styles = layoutConvertedStyles.getDesktop(orientation);
         break;
     }
+    console.log(orientation, deviceType, resize, styles);
     return styles;
   }, [orientation, resize, deviceType]);
 
