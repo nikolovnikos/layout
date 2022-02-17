@@ -96,7 +96,7 @@ export function AppProvider({ children }) {
         setOrienation(orientationTypes.portrait);
       }
     };
-    window.addEventListener('resize', handleResize, false);
+    window.addEventListener('resize', handleResize, true);
     if (window.onorientationchange) {
       // Only on mobile devices
       window.addEventListener("orientationchange", handleOrienationChangeEvent, true);
