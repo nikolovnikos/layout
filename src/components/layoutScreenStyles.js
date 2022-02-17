@@ -1,4 +1,4 @@
-import { LayoutZeplinConverter } from '../helpers/LayoutZeplinConverter';
+import { LayoutZeplinConverter, ZeplinStyle } from '../helpers/LayoutZeplinConverter';
 import { orientationTypes } from '../general/types';
 
 export const defaultStyles = {
@@ -62,24 +62,6 @@ export const defaultStyles = {
     height: 0,
   },
 };
-
-class ZeplinStyle {
-  /**
-   *  ZeplinStyle
-   * @param {LayoutZeplinConverter} layoutZ instance of LayoutZeplinConverter class
-   * @param {string} orientation portrait or landscape
-   *
-   */
-  constructor(layoutZ, orientation) {
-    this.layoutZ = layoutZ;
-    this.orientation = orientation;
-  }
-  getMobile = () => {}
-  getTablet = () => {}
-  getDesktop = () => {}
-}
-
-
 
 export class ZeplinStylesLayoutScreen extends ZeplinStyle {
   /**
