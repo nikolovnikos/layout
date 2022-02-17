@@ -29,7 +29,7 @@ export function AppProvider({ children }) {
   const getDeviceType = () => {
     // console.log(navigator.userAgent)
     const deviceByUserAgent = getDeviceByUserAgent();
-    if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth <= TABLET_MAX_WIDTH_SIZE) {
+    if (deviceByUserAgent === deviceTypes.desktop && window.screen.width <= TABLET_MAX_WIDTH_SIZE) {
       return deviceTypes.tablet;
     }
     return deviceByUserAgent;
@@ -47,7 +47,7 @@ export function AppProvider({ children }) {
   }
 
   const [deviceType, setDeviceType] = useState(() => getDeviceType());
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [innerWidth, setInnerWidth] = useState(window.screen.availWidth);
   const [orientation, setOrienation] = useState(() => getCurrentOrientation());
 
   function getCurrentOrientation() {
@@ -77,10 +77,10 @@ export function AppProvider({ children }) {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log(window.outerHeight, window.innerWidth);
-      setInnerWidth(window.innerWidth);
+      console.log(window.screen.availWidth);
+      setInnerWidth(window.screen.availWidth);
       const deviceByUserAgent = getDeviceByUserAgent();
-      if (deviceByUserAgent === deviceTypes.desktop && window.innerWidth > TABLET_MAX_WIDTH_SIZE) {
+      if (deviceByUserAgent === deviceTypes.desktop && window.screen.availWidth > TABLET_MAX_WIDTH_SIZE) {
         setDeviceType(deviceTypes.desktop);
       }
       if (!window.onorientationchange) {

@@ -9,11 +9,11 @@ export class LayoutZeplinConverter {
 
   #deviceWidthLandZ = 0;
 
-  innerWidth = window.innerWidth;
+  innerWidth = window.screen.availWidth;
 
   #getWidth = (widthZ = 0, deviceWidthZ = 0, locked = false) => {
     let windowWidth = this.innerWidth;
-    // console.log(windowWidth);
+    // console.log(windowWidth, 'z');
     if (locked && windowWidth > deviceWidthZ) {
       windowWidth = deviceWidthZ;
     }
