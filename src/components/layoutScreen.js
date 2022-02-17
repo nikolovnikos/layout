@@ -21,7 +21,7 @@ import { LayoutZeplinConverter } from '../helpers/LayoutZeplinConverter';
   Mobile
   https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/61b70b84075a1e48410f5f88
 */
-const layoutZPhone = new LayoutZeplinConverter(devicesDimensions.iphone11_1111);
+const layoutZPhone = new LayoutZeplinConverter(devicesDimensions.iphone11_safearea);
 /*
   Desktop
   https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a368451206fa8e5757617

@@ -1,7 +1,7 @@
 export const TABLET_MAX_WIDTH_SIZE = 1133;
 
 export const devicesDimensions = {
-  iphone11_1111: { // iphone 11 with safearea
+  iphone11_safearea: { // iphone 11 with safearea
     deviceWidthPortZ: 414,
     deviceWidthLandZ: 800,
   },
