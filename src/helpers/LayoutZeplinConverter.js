@@ -4,6 +4,8 @@ Number.prototype.toFixedNumber = function(digits, base){
   return Math.round(this*pow) / pow;
 }
 
+const getWindowWidth = () => document.body.clientWidth;
+
 export class ZeplinStyle {
   /**
    *  ZeplinStyle
@@ -21,28 +23,42 @@ export class ZeplinStyle {
 }
 
 export class LayoutZeplinConverter {
-  #deviceWidthPortZ = 0;
+  /**
+  * @param {number} deviceWidthPortZ width of the device in portrait in Zeplin
+  * */
+  #deviceWidthPortZ;
 
-  #deviceWidthLandZ = 0;
+  /**
+   * @param {number} deviceWidthLandZ width of the device in landscape in Zeplin
+   * */
+  #deviceWidthLandZ;
 
-  innerWidth = document.body.clientWidth;
-
-  #getWidth = (widthZ = 0, deviceWidthZ = 0, locked = false) => {
-    let windowWidth = this.innerWidth;
-    // console.log(windowWidth, 'z');
+  /**
+   *
+   * @param {number} widthZ width of element in Zeplin
+   * @param {number} deviceWidthZ width of device in Zeplin (portrait or landscape)
+   *
+   */
+  #getWidth = (widthZ, deviceWidthZ, locked = false) => {
+    let windowWidth = getWindowWidth();
     if (locked && windowWidth > deviceWidthZ) {
       windowWidth = deviceWidthZ;
     }
-    const newWidth = widthZ;
-    const windowWidthZ = deviceWidthZ;
-    const ratio = windowWidth / windowWidthZ;
-    return (newWidth * ratio).toFixedNumber(2);
+    const ratio = windowWidth / deviceWidthZ;
+    return (widthZ * ratio).toFixedNumber(3);
   }
 
-  #getBox = (widthZ = 0, heightZ = 0, deviceWidthZ = 0, locked = false) => {
+  /**
+   *
+   * @param {number} widthZ width of element in Zeplin
+   * @param {number} heightZ height of element in Zeplin
+   * @param {number} deviceWidthZ width of device in Zeplin (portrait or landscape)
+   *
+   */
+  #getBox = (widthZ, heightZ, deviceWidthZ, locked = false) => {
     const ratioZ = widthZ / heightZ;
     const w = this.#getWidth(widthZ, deviceWidthZ, locked);
-    const h = (w / ratioZ).toFixedNumber(2);
+    const h = (w / ratioZ).toFixedNumber(3);
     return { width: w, height: h };
   }
 

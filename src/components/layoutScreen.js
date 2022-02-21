@@ -44,7 +44,6 @@ const LayoutScreen = () => {
 
     const getMobile = () => {
       let s = Object.assign({}, defaultLayoutStyles);
-      layoutZPhone.innerWidth = innerWidth;
       const mobile = new ZeplinStylesLayoutScreen(layoutZPhone, orientation);
       s = mobile.getMobile();
       return s;
@@ -52,7 +51,6 @@ const LayoutScreen = () => {
 
     const getDesktop = () => {
       let s = Object.assign({}, defaultLayoutStyles);
-      layoutZDesktop.innerWidth = innerWidth;
       const desktop = new ZeplinStylesLayoutScreen(layoutZDesktop, orientation);
       s = desktop.getDesktop();
       return s;
@@ -60,7 +58,6 @@ const LayoutScreen = () => {
 
     const getTablet = () => {
       let s = Object.assign({}, defaultLayoutStyles);
-      layoutZTablet.innerWidth = innerWidth;
       const tablet = new ZeplinStylesLayoutScreen(layoutZTablet, orientation);
       s = tablet.getTablet();
       return s;

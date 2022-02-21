@@ -92,8 +92,8 @@ export class ZeplinStylesLayoutScreen extends ZeplinStyle {
   
     s.rectangleGray1.width = isP ? layout.getWidthP(207) : layout.getWidthL(400);
     s.rectangleGray1.fontSize = isP ? layout.getHeightP(12) : layout.getHeightL(12);
-    s.rectangleGray1.paddingTop = isP ? layout.getHeightP(12) : layout.getHeightL(16);
-    s.rectangleGray1.paddingLeft = isP ? layout.getWidthP(12) : layout.getWidthL(16);
+    s.rectangleGray1.paddingTop = isP ? layout.getHeightP(16) : layout.getHeightL(16);
+    s.rectangleGray1.paddingLeft = isP ? layout.getWidthP(16) : layout.getWidthL(16);
   
     s.rectangleGray2.width = isP ? layout.getWidthP(110) : layout.getWidthL(213);
   
