@@ -1,38 +1,18 @@
 import {
-  useMemo, useRef, useEffect,
+  useMemo,
 } from 'react';
 
-// import PropTypes from 'prop-types';
-import {
-  ZeplinStylesLayoutScreen,
-  defaultStyles as defaultLayoutStyles,
-} from './layoutScreenStyles';
 
 import {
   useDeviceTypeContext,
   useOrientationContext,
   useInnerWidthContext,
+  deviceTypes,
 } from '../conext/AppContext';
 
-import { deviceTypes } from '../general/types';
-import {devicesDimensions } from '../general/constants';
-import { LayoutZeplinConverter } from '../helpers/LayoutZeplinConverter';
-/*
-  Mobile
-  https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/61b70b84075a1e48410f5f88
-*/
-const layoutZPhone = new LayoutZeplinConverter(devicesDimensions.iphone11_safearea);
-/*
-  Desktop
-  https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a368451206fa8e5757617
-*/
-const layoutZDesktop = new LayoutZeplinConverter(devicesDimensions.desktop_1440);
+import { LayoutScreenStyle } from './LayputScreenStyles';
 
-/*
-  Tablet
-  https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a3678a46278aabb5de991
-*/
-const layoutZTablet = new LayoutZeplinConverter(devicesDimensions.ipad);
+const layoutScreenStyle = new LayoutScreenStyle('phone');
 
 const LayoutScreen = () => {
   const orientation = useOrientationContext();
@@ -40,44 +20,9 @@ const LayoutScreen = () => {
   const innerWidth = useInnerWidthContext();
 
   const layoutStyles = useMemo(() => {
-    let styles = Object.assign({}, defaultLayoutStyles);
+    layoutScreenStyle.setDeviceZ(deviceType);
+    const styles = layoutScreenStyle.getStyles(orientation);
 
-    const getMobile = () => {
-      let s = Object.assign({}, defaultLayoutStyles);
-      const mobile = new ZeplinStylesLayoutScreen(layoutZPhone, orientation);
-      s = mobile.getMobile();
-      return s;
-    };
-
-    const getDesktop = () => {
-      let s = Object.assign({}, defaultLayoutStyles);
-      const desktop = new ZeplinStylesLayoutScreen(layoutZDesktop, orientation);
-      s = desktop.getDesktop();
-      return s;
-    };
-
-    const getTablet = () => {
-      let s = Object.assign({}, defaultLayoutStyles);
-      const tablet = new ZeplinStylesLayoutScreen(layoutZTablet, orientation);
-      s = tablet.getTablet();
-      return s;
-    };
-
-    switch (deviceType) {
-      case deviceTypes.mobile:
-        styles = getMobile();
-        break;
-      case deviceTypes.desktop:
-        styles = getDesktop();
-        break;
-      case deviceTypes.tablet:
-        styles = getTablet();
-        break;
-      default:
-        styles = getDesktop();
-        break;
-    }
-    console.log(orientation, deviceType, innerWidth, styles);
     return styles;
   }, [innerWidth, orientation, deviceType]);
 
@@ -110,6 +55,7 @@ const LayoutScreen = () => {
         height: layoutStyles.rectangleWhite.height,
         backgroundColor: '#fff',
         display: 'table',
+        textAlign: 'center',
       }}
       >
         <div style={{
@@ -170,6 +116,7 @@ const LayoutScreen = () => {
           color: '#ffffff',
           position: 'absolute',
           fontFamily: 'Gotham-Light',
+          textAlign: 'center',
         }}
         >
           Type something
@@ -195,7 +142,7 @@ const LayoutScreen = () => {
       <div style={{
         width: layoutStyles.rectangleDarkGray.width,
         height: layoutStyles.rectangleDarkGray.height,
-        margin: `${layoutStyles.rectangleDarkGray.marginTop}px auto 0px auto`,
+        margin: `${layoutStyles.rectangleDarkGray.marginTop} auto 0px auto`,
         backgroundColor: '#383838',
         position: 'relative',
         display: 'table',
@@ -207,6 +154,7 @@ const LayoutScreen = () => {
           display: 'table-cell',
           verticalAlign: 'middle',
           fontFamily: 'Gotham-Medium',
+          textAlign: 'center',
         }}
         >
           Type something

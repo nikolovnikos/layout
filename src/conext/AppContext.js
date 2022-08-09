@@ -2,12 +2,8 @@
 import React, {
   useState,
   useEffect,
-  useRef,
   useContext,
 } from 'react';
-
-import { deviceTypes, orientationTypes } from '../general/types';
-import  { TABLET_MAX_WIDTH_SIZE } from '../general/constants';
 
 const OrientationContext = React.createContext();
 const DeviceTypeContext = React.createContext();
@@ -121,3 +117,15 @@ export function AppProvider({ children }) {
     </>
   );
 }
+
+export const deviceTypes = {
+  mobile: 'phone',
+  tablet: 'tablet',
+  desktop: 'desktop',
+};
+
+export const orientationTypes = {
+  portrait: 'portrait',
+  landscape: 'landscape',
+}
+const TABLET_MAX_WIDTH_SIZE = 1133;
