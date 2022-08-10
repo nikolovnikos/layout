@@ -61,8 +61,6 @@ export abstract class ZeplinConverter {
     this.orientation = orientation;
   }
 
-  public getDeviceDimensions = () : deviceDimZ => this.deviceDimZ
-
   private calucalteWidth = (widthZ: number, deviceWidthZ: number, locked: boolean = false): number => {
     let windowWidth = this.getWindowWidth();
     if (locked && windowWidth > deviceWidthZ) {
