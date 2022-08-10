@@ -26,7 +26,14 @@ const LayoutScreen = () => {
   });
 
   useEffect(() => {
+    const isMobileDevice = (deviceType === 'phone' || deviceType === 'tablet');
+    const isNotRealPortrait = isMobileDevice && orientation === 'portrait' && innerWidth > window.innerHeight;
+    const isNotRealLandscape = isMobileDevice && orientation === 'landscape' && innerWidth < window.innerHeight;
+    if (isNotRealPortrait || isNotRealLandscape) {
+      return;
+    }
     console.log(innerWidth, orientation, deviceType);
+
     zeplinStyleObject.setDeviceZ(deviceType);
     const styles = zeplinStyleObject.getStyles(orientation);
     setZeplinStyles(styles);
