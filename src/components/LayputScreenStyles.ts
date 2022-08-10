@@ -27,10 +27,6 @@ export class LayoutScreenStyle extends ZeplinStyle <StyleProps> {
   }
   setDeviseZToStorage() {}
   phoneDeviceZ() {
-    // const { devicesZeplin } = storeCommon.getState();
-    // if (devicesZeplin.iphone11_safearea instanceof RWZeplinConverter) {
-    //   return devicesZeplin.iphone11_safearea;
-    // }
     /*
       Mobile
       https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/61b70b84075a1e48410f5f88
@@ -39,10 +35,6 @@ export class LayoutScreenStyle extends ZeplinStyle <StyleProps> {
     return phoneZ;
   }
   tabletDeviceZ() {
-    // const { devicesZeplin } = storeCommon.getState();
-    // if (devicesZeplin.ipad instanceof RWZeplinConverter) {
-    //   return devicesZeplin.ipad;
-    // }
     /*
       Tablet
       https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a3678a46278aabb5de991
