@@ -174,7 +174,7 @@ export abstract class ZeplinStyle <T>  {
   protected abstract tabletStylesLandscape(): T;
   protected abstract desktopStylesLandscape(): T;
 
-  protected abstract setDeviseZToStorage(): void;
+  protected abstract setDeviceZToStorage(): void;
 
   private getPhone(orientation: Orientation): T {
     const isPortrait = orientation === 'portrait';

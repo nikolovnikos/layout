@@ -27,7 +27,7 @@ const LayoutScreen = () => {
   }, [innerWidth, orientation, deviceType]);
 
   useEffect(() => {
-    zeplinStyleObject.setDeviseZToStorage();
+    zeplinStyleObject.setDeviceZToStorage();
   }, []);
 
   const rectangleGreen = () => {

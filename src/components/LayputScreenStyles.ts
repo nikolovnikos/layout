@@ -25,7 +25,7 @@ export class LayoutScreenStyle extends ZeplinStyle <StyleProps> {
   constructor(deviceType: deviceType) {
     super(deviceType);
   }
-  setDeviseZToStorage() {}
+  setDeviceZToStorage() {}
   phoneDeviceZ() {
     /*
       Mobile
