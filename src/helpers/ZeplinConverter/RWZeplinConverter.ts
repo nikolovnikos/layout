@@ -1,8 +1,8 @@
-import { ZeplinConverter, deviceDimZ, Orientation } from './ZeplinConverter';
+import { ZeplinConverter, deviceModel, Orientation } from './ZeplinConverter';
 
 export class RWZeplinConverter extends ZeplinConverter {
-  constructor (deviceZ: deviceDimZ, orientation: Orientation = 'portrait') {
-    super(deviceZ, orientation);
+  constructor (deviceModel: deviceModel, orientation: Orientation = 'portrait') {
+    super(deviceModel, orientation);
   }
   getWindowHeight(): number {
     return document.body.clientHeight;

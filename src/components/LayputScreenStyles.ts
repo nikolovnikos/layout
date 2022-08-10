@@ -1,6 +1,5 @@
 import {
   ZeplinStyle,
-  devicesDimensionsZ,
   deviceType,
   WithRequiredProperty,
 } from '../helpers/ZeplinConverter/ZeplinConverter';
@@ -36,7 +35,7 @@ export class LayoutScreenStyle extends ZeplinStyle <StyleProps> {
       Mobile
       https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/61b70b84075a1e48410f5f88
     */
-    const phoneZ = new RWZeplinConverter(devicesDimensionsZ.iphone11_safearea);
+    const phoneZ = new RWZeplinConverter('iphone11');
     return phoneZ;
   }
   tabletDeviceZ() {
@@ -48,7 +47,7 @@ export class LayoutScreenStyle extends ZeplinStyle <StyleProps> {
       Tablet
       https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a3678a46278aabb5de991
     */
-    const tabletZ = new RWZeplinConverter(devicesDimensionsZ.ipad);
+    const tabletZ = new RWZeplinConverter('ipad');
     return tabletZ;
     
   }
@@ -57,7 +56,7 @@ export class LayoutScreenStyle extends ZeplinStyle <StyleProps> {
       Desktop
       https://app.zeplin.io/project/61a8a9480bf3cf8df5b66ab2/screen/620a368451206fa8e5757617
     */
-    const desktopZ = new RWZeplinConverter(devicesDimensionsZ.desktop_1440);
+    const desktopZ = new RWZeplinConverter('desktop1440');
     return desktopZ;
   }
   phoneStylesPortrait() {

@@ -1,36 +1,32 @@
-export interface deviceDimZ {
-  model: deviceModel,
+interface deviceDimZ {
   widthP: number,
   heightP: number,
   widthL: number,
   heightL: number,
 }
 
-type deviceModel = 'iphone11' | 'ipad' | 'desktop1440';
+export type deviceModel = 'iphone11' | 'ipad' | 'desktop1440';
 
-interface devicesDim {
-  [key: string]: deviceDimZ,
+type devicesDim = {
+  [P in deviceModel]: deviceDimZ
 }
 
 export type deviceType = 'phone' | 'tablet' | 'desktop';
 
-export const devicesDimensionsZ: devicesDim = {
-  iphone11_safearea: { // iphone 11 with safearea
-    model: 'iphone11',
+const devicesDimensionsZ: devicesDim = {
+  iphone11: { // iphone 11 with safearea
     widthP: 414,
     widthL: 800,
     heightP: 896,
     heightL: 400,
   },
   ipad: {
-    model: 'ipad',
     widthP: 768,
     widthL: 1024,
     heightP: 1024,
     heightL: 768,
   },
-  desktop_1440: {
-    model: 'desktop1440',
+  desktop1440: {
     widthP: 1440,
     widthL: 1440,
     heightP: 1024,
@@ -57,9 +53,9 @@ export abstract class ZeplinConverter {
    * @param {deviceDimZ} deviceDimZ Object of device width in portrait and landscape in Zeplin project
    *
   */
-  constructor(deviceDimZ: deviceDimZ, orientation: Orientation = 'portrait') {
-    this.deviceDimZ = deviceDimZ;
-    this.deviceModel = deviceDimZ.model;
+  constructor(deviceModel: deviceModel, orientation: Orientation = 'portrait') {
+    this.deviceDimZ = devicesDimensionsZ[deviceModel];
+    this.deviceModel = deviceModel;
     this.orientation = orientation;
   }
 
