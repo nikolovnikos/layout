@@ -26,7 +26,7 @@ const LayoutScreen = () => {
   });
 
   useEffect(() => {
-    console.log(0)
+    console.log(innerWidth, orientation, deviceType);
     zeplinStyleObject.setDeviceZ(deviceType);
     const styles = zeplinStyleObject.getStyles(orientation);
     setZeplinStyles(styles);
