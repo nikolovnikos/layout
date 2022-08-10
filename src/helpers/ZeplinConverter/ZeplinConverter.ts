@@ -34,7 +34,7 @@ const devicesDimensionsZ: devicesDim = {
   }
 };
 
-export type Orientation = 'portrait'|'landscape';
+export type Orientation = 'portrait' | 'landscape';
 
 export type WithRequiredProperty<Type, Key extends keyof Type> = Pick<Type, Key> & {
   [Property in Key]-?: Type[Property];
