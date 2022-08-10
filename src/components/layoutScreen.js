@@ -1,5 +1,6 @@
 import {
   useMemo,
+  useEffect,
 } from 'react';
 
 
@@ -7,30 +8,33 @@ import {
   useDeviceTypeContext,
   useOrientationContext,
   useInnerWidthContext,
-  deviceTypes,
 } from '../conext/AppContext';
 
 import { LayoutScreenStyle } from './LayputScreenStyles';
-
-const layoutScreenStyle = new LayoutScreenStyle('phone');
 
 const LayoutScreen = () => {
   const orientation = useOrientationContext();
   const deviceType = useDeviceTypeContext();
   const innerWidth = useInnerWidthContext();
 
-  const layoutStyles = useMemo(() => {
-    layoutScreenStyle.setDeviceZ(deviceType);
-    const styles = layoutScreenStyle.getStyles(orientation);
+  const zeplinStyleObject = useMemo(() => new LayoutScreenStyle('phone'), []);
+
+  const zeplinStyles = useMemo(() => {
+    zeplinStyleObject.setDeviceZ(deviceType);
+    const styles = zeplinStyleObject.getStyles(orientation);
 
     return styles;
   }, [innerWidth, orientation, deviceType]);
 
+  useEffect(() => {
+    zeplinStyleObject.setDeviseZToStorage();
+  }, []);
+
   const rectangleGreen = () => {
     return (
       <div style={{
-        width: layoutStyles.rectangleGreen.width,
-        height: layoutStyles.rectangleGreen.height,
+        width: zeplinStyles.rectangleGreen.width,
+        height: zeplinStyles.rectangleGreen.height,
         backgroundColor: '#49c400',
       }}
       />
@@ -40,8 +44,8 @@ const LayoutScreen = () => {
   const rectangleOrange = () => {
     return (
       <div style={{
-        width: layoutStyles.rectangleOrange.width,
-        height: layoutStyles.rectangleOrange.height,
+        width: zeplinStyles.rectangleOrange.width,
+        height: zeplinStyles.rectangleOrange.height,
         backgroundColor: '#ff9c24',
       }}
       />
@@ -51,15 +55,15 @@ const LayoutScreen = () => {
   const rectangleWhite = () => {
     return (
       <div style={{
-        width: layoutStyles.rectangleWhite.width,
-        height: layoutStyles.rectangleWhite.height,
+        width: zeplinStyles.rectangleWhite.width,
+        height: zeplinStyles.rectangleWhite.height,
         backgroundColor: '#fff',
         display: 'table',
         textAlign: 'center',
       }}
       >
         <div style={{
-          fontSize: layoutStyles.rectangleWhite.fontSize,
+          fontSize: zeplinStyles.rectangleWhite.fontSize,
           color: 'black',
           display: 'table-cell',
           verticalAlign: 'middle',
@@ -75,9 +79,9 @@ const LayoutScreen = () => {
   const rectangleBigBlack = () => {
     return (
       <div style={{
-        width: layoutStyles.rectangleBigBlack.width,
-        height: layoutStyles.rectangleBigBlack.height,
-        marginBottom: layoutStyles.rectangleBigBlack.marginBottom,
+        width: zeplinStyles.rectangleBigBlack.width,
+        height: zeplinStyles.rectangleBigBlack.height,
+        marginBottom: zeplinStyles.rectangleBigBlack.marginBottom,
         backgroundColor: '#000',
       }}
       />
@@ -86,8 +90,8 @@ const LayoutScreen = () => {
 
   const rectanglesGray = () => {
     return (<div style={{
-      width: layoutStyles.rectanglesGray.width,
-      height: layoutStyles.rectanglesGray.height,
+      width: zeplinStyles.rectanglesGray.width,
+      height: zeplinStyles.rectanglesGray.height,
       position: 'relative',
       margin: 'auto',
     }}
@@ -100,10 +104,10 @@ const LayoutScreen = () => {
   const rectangleGray1 = () => {
     return (
       <div className='rectangleGray1' style={{
-        width: layoutStyles.rectangleGray1.width,
-        fontSize: layoutStyles.rectangleGray1.fontSize,
-        paddingLeft: layoutStyles.rectangleGray1.paddingLeft,
-        paddingTop: layoutStyles.rectangleGray1.paddingTop,
+        width: zeplinStyles.rectangleGray1.width,
+        fontSize: zeplinStyles.rectangleGray1.fontSize,
+        paddingLeft: zeplinStyles.rectangleGray1.paddingLeft,
+        paddingTop: zeplinStyles.rectangleGray1.paddingTop,
         height: '100%',
         backgroundColor: '#959595',
         float: 'left',
@@ -128,7 +132,7 @@ const LayoutScreen = () => {
   const rectangleGray2 = () => {
     return (
       <div style={{
-        width: layoutStyles.rectangleGray2.width,
+        width: zeplinStyles.rectangleGray2.width,
         height: '100%',
         backgroundColor: '#cccccc',
         float: 'right',
@@ -140,16 +144,16 @@ const LayoutScreen = () => {
   const rectangleDarkGray = () => {
     return (
       <div style={{
-        width: layoutStyles.rectangleDarkGray.width,
-        height: layoutStyles.rectangleDarkGray.height,
-        margin: `${layoutStyles.rectangleDarkGray.marginTop} auto 0px auto`,
+        width: zeplinStyles.rectangleDarkGray.width,
+        height: zeplinStyles.rectangleDarkGray.height,
+        margin: `${zeplinStyles.rectangleDarkGray.marginTop} auto 0px auto`,
         backgroundColor: '#383838',
         position: 'relative',
         display: 'table',
       }}
       >
         <div style={{
-          fontSize: layoutStyles.rectangleDarkGray.fontSize,
+          fontSize: zeplinStyles.rectangleDarkGray.fontSize,
           color: '#ffffff',
           display: 'table-cell',
           verticalAlign: 'middle',
@@ -165,10 +169,10 @@ const LayoutScreen = () => {
 
   const rectanglesColor = () => {
     return (<div style={{
-      width: layoutStyles.rectanglesColor.width,
-      marginTop: layoutStyles.rectanglesColor.marginTop,
-      paddingTop: layoutStyles.rectanglesColor.paddingTop,
-      paddingBottom: layoutStyles.rectanglesColor.paddingBottom,
+      width: zeplinStyles.rectanglesColor.width,
+      marginTop: zeplinStyles.rectanglesColor.marginTop,
+      paddingTop: zeplinStyles.rectanglesColor.paddingTop,
+      paddingBottom: zeplinStyles.rectanglesColor.paddingBottom,
       display: 'flex',
       backgroundColor: '#afafaf',
       justifyContent: 'center',
@@ -183,8 +187,8 @@ const LayoutScreen = () => {
   const rectangleCian = () => {
     return (
       <div style={{
-        width: layoutStyles.rectangleCian.width,
-        height: layoutStyles.rectangleCian.height,
+        width: zeplinStyles.rectangleCian.width,
+        height: zeplinStyles.rectangleCian.height,
         backgroundColor: '#55ecce',
       }}
       />
@@ -194,10 +198,10 @@ const LayoutScreen = () => {
   const rectangleBlue = () => {
     return (
       <div style={{
-        width: layoutStyles.rectangleBlue.width,
-        height: layoutStyles.rectangleBlue.height,
-        marginLeft: layoutStyles.rectangleBlue.marginLeft,
-        marginRight: layoutStyles.rectangleBlue.marginRight,
+        width: zeplinStyles.rectangleBlue.width,
+        height: zeplinStyles.rectangleBlue.height,
+        marginLeft: zeplinStyles.rectangleBlue.marginLeft,
+        marginRight: zeplinStyles.rectangleBlue.marginRight,
         backgroundColor: '#556eec',
       }}
       />
@@ -207,8 +211,8 @@ const LayoutScreen = () => {
   const rectanglePing = () => {
     return (
       <div style={{
-        width: layoutStyles.rectanglePing.width,
-        height: layoutStyles.rectanglePing.height,
+        width: zeplinStyles.rectanglePing.width,
+        height: zeplinStyles.rectanglePing.height,
         backgroundColor: '#cc55ec',
       }}
       />

@@ -1,32 +1,36 @@
 export interface deviceDimZ {
+  model: deviceModel,
   widthP: number,
   heightP: number,
   widthL: number,
   heightL: number,
 }
 
+type deviceModel = 'iphone11' | 'ipad' | 'desktop1440';
+
 interface devicesDim {
-  iphone11_safearea: deviceDimZ,
-  ipad: deviceDimZ,
-  desktop_1440: deviceDimZ,
+  [key: string]: deviceDimZ,
 }
 
 export type deviceType = 'phone' | 'tablet' | 'desktop';
 
 export const devicesDimensionsZ: devicesDim = {
   iphone11_safearea: { // iphone 11 with safearea
+    model: 'iphone11',
     widthP: 414,
     widthL: 800,
     heightP: 896,
     heightL: 400,
   },
   ipad: {
+    model: 'ipad',
     widthP: 768,
     widthL: 1024,
     heightP: 1024,
     heightL: 768,
   },
   desktop_1440: {
+    model: 'desktop1440',
     widthP: 1440,
     widthL: 1440,
     heightP: 1024,
@@ -43,6 +47,7 @@ export type WithRequiredProperty<Type, Key extends keyof Type> = Pick<Type, Key>
 export abstract class ZeplinConverter {
   private deviceDimZ: deviceDimZ;
   private orientation: Orientation;
+  deviceModel: deviceModel;
 
   protected abstract getWindowWidth(): number;
   protected abstract getWindowHeight(): number;
@@ -54,6 +59,7 @@ export abstract class ZeplinConverter {
   */
   constructor(deviceDimZ: deviceDimZ, orientation: Orientation = 'portrait') {
     this.deviceDimZ = deviceDimZ;
+    this.deviceModel = deviceDimZ.model;
     this.orientation = orientation;
   }
 
@@ -171,6 +177,8 @@ export abstract class ZeplinStyle <T>  {
   protected abstract tabletStylesPortrait(): T;
   protected abstract tabletStylesLandscape(): T;
   protected abstract desktopStylesLandscape(): T;
+
+  protected abstract setDeviseZToStorage(): void;
 
   private getPhone(orientation: Orientation): T {
     const isPortrait = orientation === 'portrait';

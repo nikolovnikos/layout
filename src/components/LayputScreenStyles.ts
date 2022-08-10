@@ -26,6 +26,7 @@ export class LayoutScreenStyle extends ZeplinStyle <StyleProps> {
   constructor(deviceType: deviceType) {
     super(deviceType);
   }
+  setDeviseZToStorage() {}
   phoneDeviceZ() {
     // const { devicesZeplin } = storeCommon.getState();
     // if (devicesZeplin.iphone11_safearea instanceof RWZeplinConverter) {
