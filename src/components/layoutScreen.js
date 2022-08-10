@@ -1,6 +1,7 @@
 import {
   useMemo,
   useEffect,
+  useState,
 } from 'react';
 
 
@@ -19,16 +20,21 @@ const LayoutScreen = () => {
 
   const zeplinStyleObject = useMemo(() => new LayoutScreenStyle('phone'), []);
 
-  const zeplinStyles = useMemo(() => {
+  const [zeplinStyles, setZeplinStyles] = useState(() => {
+    zeplinStyleObject.setDeviceZ(deviceType);
+    return zeplinStyleObject.getStyles(orientation)
+  });
+
+  useEffect(() => {
+    console.log(0)
     zeplinStyleObject.setDeviceZ(deviceType);
     const styles = zeplinStyleObject.getStyles(orientation);
-
-    return styles;
-  }, [innerWidth, orientation, deviceType]);
+    setZeplinStyles(styles);
+  }, [innerWidth, orientation, deviceType, zeplinStyleObject]);
 
   useEffect(() => {
     zeplinStyleObject.setDeviceZToStorage();
-  }, []);
+  }, [zeplinStyleObject]);
 
   const rectangleGreen = () => {
     return (

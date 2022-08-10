@@ -1,6 +1,5 @@
 import {
   ZeplinStyle,
-  deviceType,
   WithRequiredProperty,
 } from '../helpers/ZeplinConverter/ZeplinConverter';
 import { RWZeplinConverter } from '../helpers/ZeplinConverter/RWZeplinConverter';
@@ -22,9 +21,6 @@ interface StyleProps {
 }
 
 export class LayoutScreenStyle extends ZeplinStyle <StyleProps> {
-  constructor(deviceType: deviceType) {
-    super(deviceType);
-  }
   setDeviceZToStorage() {}
   phoneDeviceZ() {
     /*
