@@ -4,7 +4,6 @@ import {
   useState,
 } from 'react';
 
-
 import {
   useDeviceTypeContext,
   useOrientationContext,
@@ -18,11 +17,14 @@ const LayoutScreen = () => {
   const deviceType = useDeviceTypeContext();
   const innerWidth = useInnerWidthContext();
 
-  const zeplinStyleObject = useMemo(() => new LayoutScreenStyle('phone'), []);
+  const zeplinStyleObject = useMemo(() => {
+    return new LayoutScreenStyle('phone')
+  }, []);
 
   const [zeplinStyles, setZeplinStyles] = useState(() => {
     zeplinStyleObject.setDeviceZ(deviceType);
-    return zeplinStyleObject.getStyles(orientation)
+    const styles = zeplinStyleObject.getStyles(orientation);
+    return styles;
   });
 
   useEffect(() => {
@@ -43,7 +45,8 @@ const LayoutScreen = () => {
     zeplinStyleObject.setDeviceZToStorage();
   }, [zeplinStyleObject]);
 
-  const rectangleGreen = () => {
+  const rectangleGreen = useMemo(() => {
+    console.log('rectangleGreen');
     return (
       <div style={{
         width: zeplinStyles.rectangleGreen.width,
@@ -52,9 +55,10 @@ const LayoutScreen = () => {
       }}
       />
     );
-  };
+  }, [zeplinStyles.rectangleGreen.width, zeplinStyles.rectangleGreen.height]);
 
-  const rectangleOrange = () => {
+  const rectangleOrange = useMemo(() => {
+    console.log('rectangleOrange');
     return (
       <div style={{
         width: zeplinStyles.rectangleOrange.width,
@@ -63,9 +67,10 @@ const LayoutScreen = () => {
       }}
       />
     );
-  };
+  }, [zeplinStyles.rectangleOrange.width, zeplinStyles.rectangleOrange.height]);
 
-  const rectangleWhite = () => {
+  const rectangleWhite = useMemo(() => {
+    console.log('rectangleWhite')
     return (
       <div style={{
         width: zeplinStyles.rectangleWhite.width,
@@ -87,9 +92,10 @@ const LayoutScreen = () => {
         </div>
       </div>
     );
-  };
+  }, [zeplinStyles.rectangleWhite.width, zeplinStyles.rectangleWhite.height, zeplinStyles.rectangleWhite.fontSize]);
 
-  const rectangleBigBlack = () => {
+  const rectangleBigBlack = useMemo(() => {
+    console.log('rectangleBigBlack')
     return (
       <div style={{
         width: zeplinStyles.rectangleBigBlack.width,
@@ -99,22 +105,9 @@ const LayoutScreen = () => {
       }}
       />
     );
-  };
+  }, [zeplinStyles.rectangleBigBlack.width, zeplinStyles.rectangleBigBlack.height, zeplinStyles.rectangleBigBlack.marginBottom]);
 
-  const rectanglesGray = () => {
-    return (<div style={{
-      width: zeplinStyles.rectanglesGray.width,
-      height: zeplinStyles.rectanglesGray.height,
-      position: 'relative',
-      margin: 'auto',
-    }}
-    >
-      {rectangleGray1()}
-      {rectangleGray2()}
-    </div>)
-  };
-
-  const rectangleGray1 = () => {
+  const rectangleGray1 = useMemo(() => {
     return (
       <div className='rectangleGray1' style={{
         width: zeplinStyles.rectangleGray1.width,
@@ -140,9 +133,9 @@ const LayoutScreen = () => {
         </div>
       </div>
     );
-  };
+  }, [zeplinStyles.rectangleGray1.width, zeplinStyles.rectangleGray1.fontSize, zeplinStyles.rectangleGray1.paddingLeft, zeplinStyles.rectangleGray1.paddingTop]);
 
-  const rectangleGray2 = () => {
+  const rectangleGray2 = useMemo(() => {
     return (
       <div style={{
         width: zeplinStyles.rectangleGray2.width,
@@ -152,9 +145,23 @@ const LayoutScreen = () => {
       }}
       />
     );
-  };
+  }, [zeplinStyles.rectangleGray2.width]);
 
-  const rectangleDarkGray = () => {
+  const rectanglesGray = useMemo(() => {
+    console.log('rectanglesGray')
+    return (<div style={{
+      width: zeplinStyles.rectanglesGray.width,
+      height: zeplinStyles.rectanglesGray.height,
+      position: 'relative',
+      margin: 'auto',
+    }}
+    >
+      {rectangleGray1}
+      {rectangleGray2}
+    </div>)
+  }, [zeplinStyles.rectanglesGray.width, zeplinStyles.rectanglesGray.height, rectangleGray1, rectangleGray2]);
+
+  const rectangleDarkGray = useMemo(() => {
     return (
       <div style={{
         width: zeplinStyles.rectangleDarkGray.width,
@@ -178,26 +185,9 @@ const LayoutScreen = () => {
         </div>
       </div>
     );
-  };
+  }, [zeplinStyles.rectangleDarkGray.width, zeplinStyles.rectangleDarkGray.height, zeplinStyles.rectangleDarkGray.fontSize, zeplinStyles.rectangleDarkGray.marginTop]);
 
-  const rectanglesColor = () => {
-    return (<div style={{
-      width: zeplinStyles.rectanglesColor.width,
-      marginTop: zeplinStyles.rectanglesColor.marginTop,
-      paddingTop: zeplinStyles.rectanglesColor.paddingTop,
-      paddingBottom: zeplinStyles.rectanglesColor.paddingBottom,
-      display: 'flex',
-      backgroundColor: '#afafaf',
-      justifyContent: 'center',
-    }}
-    >
-      {rectangleCian()}
-      {rectangleBlue()}
-      {rectanglePing()}
-    </div>);
-  };
-
-  const rectangleCian = () => {
+  const rectangleCian = useMemo(() => {
     return (
       <div style={{
         width: zeplinStyles.rectangleCian.width,
@@ -206,9 +196,9 @@ const LayoutScreen = () => {
       }}
       />
     );
-  };
+  }, [zeplinStyles.rectangleCian.width, zeplinStyles.rectangleCian.height]);
 
-  const rectangleBlue = () => {
+  const rectangleBlue = useMemo(() => {
     return (
       <div style={{
         width: zeplinStyles.rectangleBlue.width,
@@ -219,9 +209,9 @@ const LayoutScreen = () => {
       }}
       />
     );
-  };
+  }, [zeplinStyles.rectangleBlue.width, zeplinStyles.rectangleBlue.height, zeplinStyles.rectangleBlue.marginLeft, zeplinStyles.rectangleBlue.marginRight]);
 
-  const rectanglePing = () => {
+  const rectanglePing = useMemo(() => {
     return (
       <div style={{
         width: zeplinStyles.rectanglePing.width,
@@ -230,19 +220,37 @@ const LayoutScreen = () => {
       }}
       />
     );
-  };
+  }, [zeplinStyles.rectanglePing.width, zeplinStyles.rectanglePing.height]);
+
+  const rectanglesColor =  useMemo(() => {
+    console.log('rectanglesColor')
+    return (<div style={{
+      width: zeplinStyles.rectanglesColor.width,
+      marginTop: zeplinStyles.rectanglesColor.marginTop,
+      paddingTop: zeplinStyles.rectanglesColor.paddingTop,
+      paddingBottom: zeplinStyles.rectanglesColor.paddingBottom,
+      display: 'flex',
+      backgroundColor: '#afafaf',
+      justifyContent: 'center',
+    }}
+    >
+      {rectangleCian}
+      {rectangleBlue}
+      {rectanglePing}
+    </div>);
+  }, [rectangleBlue, rectanglePing, zeplinStyles.rectanglesColor.width, zeplinStyles.rectanglesColor.height, zeplinStyles.rectanglesColor.paddingTop, zeplinStyles.rectanglesColor.paddingBottom, rectangleCian]);
 
   return (
     <div style={{
       backgroundColor: '#fff',
     }}>
-      {rectangleGreen()}
-      {rectangleOrange()}
-      {rectangleWhite()}
-      {rectangleBigBlack()}
-      {rectanglesGray()}
-      {rectangleDarkGray()}
-      {rectanglesColor()}
+      {rectangleGreen}
+      {rectangleOrange}
+      {rectangleWhite}
+      {rectangleBigBlack}
+      {rectanglesGray}
+      {rectangleDarkGray}
+      {rectanglesColor}
     </div>
   );
 };
